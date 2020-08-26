@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button } from "antd";
 
 const layout = {
   labelCol: {
@@ -29,7 +29,8 @@ function Login() {
   return (
     <>
      <h1>เข้าสู่ระบบ</h1>
-     <h3>ลงชื่อเข้าใช้ด้วย KMUTT Accounts</h3>
+     <h3>ลงชื่อเข้าใช้ด้วยบัญชีผู้ใช้ของคณะเทคโนโลยีสารสนเทศ</h3>
+     <h3>มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</h3>
       <Form
         {...layout}
         name="basic"
