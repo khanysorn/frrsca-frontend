@@ -20,7 +20,7 @@ function Class() {
           <h1 style={{ marginTop: "20px" }}>ห้องเรียนของฉัน</h1>
           
             <div className="site-card-wrapper">
-              <Row gutter={[16,16]}>
+              <Row gutter={[32,32]}>
                 <Col xs={24} md={8} >
                   <Link href="#">
                   <Card bordered={false}>
