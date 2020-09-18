@@ -30,7 +30,7 @@ body{
 }
 
 .background{
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(static/img/background_sit.png);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(assets/image/background_sit.png);
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
