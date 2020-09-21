@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Card, Col, Row, Avatar, Table  } from "antd";
+import { Layout, Menu, Card, Col, Row, Avatar, Table, Statistic  } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 const { Header, Content, Footer } = Layout;
 
@@ -61,37 +61,38 @@ function ClassDetail() {
             </Menu.Item>
           </Menu>
         </Header>
-        <Content
-          style={{ padding: "0 50px", minHeight: "calc(100vh - 134px)" }}
-        >
-          <Row style={{ marginTop: "20px" }}>
+        <Content style={{ padding: "0 50px", minHeight: "calc(100vh - 134px)" }}>
+          <Row style={{ marginTop: "20px" }} gutter={[32,32]} >
             <Col span={18}>
               <Card>
                 <h1>INT307</h1>
-                <h3>ประเด็นทางสังคมและจริยธรรมสำหรับนักเทคโนโลยีสารสนเทศ</h3>
-                <h3>กลุ่มเรียน: 1</h3>
-                <h3>
+                <p>ประเด็นทางสังคมและจริยธรรมสำหรับนักเทคโนโลยีสารสนเทศ</p>
+                <p>กลุ่มเรียน: 1</p>
+                <p>
                   อาจารย์ผู้สอน: <Avatar size="small" icon={<UserOutlined />} />{" "}
                   อ.คณิศร ชัยวิชาชาญ
-                </h3>
+                </p>
               </Card>
             </Col>
-            <Col>
-              <Card span={6} style={{height: "100%", textAlign:"center"}}>
-                <h3 style={{textAlign: "center"}}>ภาพรวมในรายวิชา</h3>
-                <h1 style={{textAlign: "center"}}>
-                  ดี
-                </h1>
+            <Col span={6}>
+              <Card style={{height: "100%",display:"flex",textAlign:"center",justifyContent: "center", alignItems: "center"}}>
+              <Statistic
+            title="สถานะของการมาเรียน"
+            value="ดี"
+            precision={2}
+            valueStyle={{ color: '#3f8600' }}
+    
+          />
               </Card>
             </Col>
           </Row>
-          <Row style={{ marginTop: "20px" }}>
-            <h3>
+          <Row span={24} style={{ marginTop: "20px", paddingLeft: "5px" }}>
+            <h2>
             ประวัติการเข้าเรียน
-            </h3>
+            </h2>
             </Row>
             <Row span={24}>
-            <Table columns={columns} dataSource={data} />
+            <Table columns={columns} dataSource={data} style={{width: "100%"}} />
           </Row>
         </Content>
         <Footer style={{ textAlign: "center" }}>
