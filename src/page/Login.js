@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Button, Icon} from "antd";
+import {Button} from "antd";
 import firebase from "firebase";
 import app from '../config';
 import { useHistory } from "react-router-dom";
@@ -46,6 +46,10 @@ function Login() {
 
   function mockloginstudent(){
     setLoading1(true);
+    // return from backend {id : '123'}
+    // const res = {id : '123'}
+    // localStorage.setItem('userId', res.id)
+    
     setTimeout(()=>{
       setLoading1(false);
       history.push("/student/class")
@@ -68,9 +72,9 @@ function Login() {
       <h1>เข้าสู่ระบบ</h1>
         <p>ลงชื่อเข้าใช้ด้วยบัญชีผู้ใช้ของคณะเทคโนโลยีสารสนเทศ
         <br/ >มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</p>
-        <p><Button type="primary" htmlType="submit" size="middle" onClick={mockloginstudent} loading={isLoading1}>ลงชื่อเข้าใช้ในฐานะนักเรียน</Button></p>  
+        <p><Button type="primary" htmlType="submit" size="middle" onClick={mockloginstudent} loading={isLoading1} disabled>ลงชื่อเข้าใช้ในฐานะนักเรียน</Button></p>  
         <p><Button type="primary" htmlType="submit" onClick={mockloginteacher} loading={isLoading2}>ลงชื่อเข้าใช้ในฐานะอาจารย์ผู้สอน</Button></p>  
-        <p><Button type="primary" htmlType="submit" component={<KMUTTLogo />}onClick={handlelogin} loading={isLoading3} style={{backgroundColor:"#fa4612"}} danger>ลงชื่อเข้าใช้ด้วย KMUTT Accounts</Button></p>  
+        <p><Button type="primary" htmlType="submit" component={<KMUTTLogo />} onClick={handlelogin} loading={isLoading3} danger disabled>ลงชื่อเข้าใช้ด้วย KMUTT Accounts</Button></p>  
       </div>
     </div>
   );
