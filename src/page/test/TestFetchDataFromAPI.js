@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Card, Col, Row, Skeleton, Statistic } from "antd";
+import { Layout, Card, Col, Row, Skeleton, Statistic, Table, Tag } from "antd";
 // import { Layout, Card, Col, Row, Skeleton, Switch, List, Avatar, Menu, Statistic, Table } from "antd";
 // import { UserOutlined } from "@ant-design/icons";
 import MenuBar from "../../components/Menu";
@@ -10,51 +10,34 @@ import { withRouter } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
 
-// const columns = [
-//   {
-//     title: 'ครั้งที่',
-//     dataIndex: 'runningnumber',
-//     key: 'runningnumber',
-//   },
-//   {
-//     title: 'เวลาที่เข้าเรียน',
-//     dataIndex: 'timestamp',
-//     key: 'timestamp',
-//   },
-//   {
-//     title: 'สถานะการเข้าเรียน',
-//     key: 'status',
-//     dataIndex: 'status',
-//   }
-// ];
+const columns = [
+  {
+    title: 'ครั้งที่',
+    dataIndex: 'runningnumber',
+    render: runningnumber => runningnumber+1 ,
+    key: 'runningnumber',
+  },
+  {
+    title: 'เวลาที่เข้าเรียน',
+    dataIndex: 'timestamp',
+    render: timestamp => <>{timestamp.substring(0,10)} {timestamp.substring(11,16)} น.</>,
+    key: 'timestamp',
+  },
+  {
+    title: 'สถานะการเข้าเรียน',
+    key: 'isontime',
+    render: isontime => <Tag color={isontime==='F'? "red":"green"}>{isontime==='F'? "เข้าเรียนสาย":"เข้าเรียนตรงเวลา"}</Tag>,
+    dataIndex: 'isontime'
+  }
+];
 
-// const data = [
-//   {
-//     runningnumber: '1',
-//     timestamp: '08:20:21',
-//     status: '101'
-//   },
-//   {
-//     key: '2',
-//     name: 'Jim Green',
-//     age: 42,
-//     address: 'London No. 1 Lake Park',
-//     tags: ['loser'],
-//   },
-//   {
-//     key: '3',
-//     name: 'Joe Black',
-//     age: 32,
-//     address: 'Sidney No. 1 Lake Park',
-//     tags: ['cool', 'teacher'],
-//   },
-// ];
 
 class OwnerAddCourse extends React.Component {
   state = {
     subject: {
       course_name: "",
     },
+    attendance: []
   };
 
   componentDidMount() {
@@ -63,7 +46,7 @@ class OwnerAddCourse extends React.Component {
 
   getSubject = async () => {
     // this.props.match.params.id
-    const res = await axios.post(
+    const res1 = await axios.post(
       "https://frrsca-backend.khanysorn.me/api/v1/class/attendance/attendancehistorystudent",
       {
         course_code: this.props.match.params.id,
@@ -71,12 +54,28 @@ class OwnerAddCourse extends React.Component {
       },
       { header: { "Access-Control-Allow-Origin": true } }
     );
-    console.log(res.data);
-    this.setState({ subject: res.data });
+    console.log(res1.data);
+    this.setState({ subject: res1.data });
+
+    const res2 = await axios.post(
+      "https://frrsca-backend.khanysorn.me/api/v1/class/attendance/gettimeofcourse",
+      {
+        course_code: this.props.match.params.id,
+        student_id: "60130500138",
+      },
+      { header: { "Access-Control-Allow-Origin": true } }
+    );
+    console.log(res2.data);
+    for (let i=0; i<res2.data.length; i++){
+      res2.data[i].runningnumber=i;
+    }
+    this.setState({ attendance: res2.data });
   };
 
   render() {
+
     console.log(this.props.match.params.id);
+    
     return (
       <Layout className="layout">
         <Header>
@@ -130,14 +129,18 @@ class OwnerAddCourse extends React.Component {
               </Card>
             </Col>
           </Row>
-          {/* <Row span={24} style={{ marginTop: "20px", paddingLeft: "5px" }}>
+          <Row span={24} style={{ marginTop: "20px", paddingLeft: "5px" }}>
             <h2>
             ประวัติการเข้าเรียน
             </h2>
             </Row>
             <Row span={24}>
-            <Table columns={columns} dataSource={data} style={{width: "100%"}} />
-          </Row>  */}
+            {this.state.attendance.length === 0 ? (
+                 <Card style={{width: "100%"}} > <Skeleton active /> </Card>
+                ) : (
+            <Table columns={columns} dataSource={this.state.attendance} style={{width: "100%"}} />
+                )}
+          </Row> 
         </Content>
         <Footer style={{ textAlign: "center" }}>
           Ant Design ©2018 Created by Ant UED
