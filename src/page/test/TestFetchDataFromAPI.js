@@ -108,22 +108,22 @@ class OwnerAddCourse extends React.Component {
             </Col> */}
           </Row>
           <Row gutter={[32, 32]}>
-            <Col span={6} xs={24} md={6}>
+            <Col span={6} xs={12} md={6}>
               <Card style={{height: "100%", display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center"}}>
                 <Statistic title="จำนวนครั้งที่มาเรียนตรงเวลา" value={this.state.subject.numOfOnTime} valueStyle={{ color: "#3f8600"}}/>
               </Card>
             </Col>
-            <Col span={6} xs={24} md={6}>
+            <Col span={6} xs={12} md={6}>
               <Card style={{height: "100%", display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center"}}>
                 <Statistic title="จำนวนครั้งที่มาเรียนสาย" value={this.state.subject.numOfLate1} valueStyle={{ color: "#d0021b" }} extra/>
               </Card>
             </Col>
-            <Col span={6} xs={24} md={6}>
+            <Col span={6} xs={12} md={6}>
               <Card style={{height: "100%", display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center"}}>
                 <Statistic title="จำนวนครั้งที่ขาดเรียน" value={this.state.subject.numOfAbsence} valueStyle={{ color: "#f8e71c" }}/>
               </Card>
             </Col>
-            <Col span={6} xs={24} md={6}>
+            <Col span={6} xs={12} md={6}>
               <Card style={{height: "100%", display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center"}}>
                 <Statistic title="จำนวนครั้งที่ลาเรียน" value="0" valueStyle={{ color: "#595959" }}/>
               </Card>
