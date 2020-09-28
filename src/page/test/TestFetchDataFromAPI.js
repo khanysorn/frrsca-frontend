@@ -33,11 +33,13 @@ const columns = [
 
 
 class OwnerAddCourse extends React.Component {
+
   state = {
     subject: {
-      course_name: "",
+    course_name: "",
     },
-    attendance: []
+    attendance: [],
+    isLoading: false
   };
 
   componentDidMount() {
@@ -46,6 +48,7 @@ class OwnerAddCourse extends React.Component {
 
   getSubject = async () => {
     // this.props.match.params.id
+    this.state.isLoading = true;
     const res1 = await axios.post(
       "https://frrsca-backend.khanysorn.me/api/v1/class/attendance/attendancehistorystudent",
       {
@@ -70,6 +73,7 @@ class OwnerAddCourse extends React.Component {
       res2.data[i].runningnumber=i;
     }
     this.setState({ attendance: res2.data });
+    this.state.isLoading = false;
   };
 
   render() {
@@ -85,7 +89,7 @@ class OwnerAddCourse extends React.Component {
           <Row style={{ marginTop: "20px" }} gutter={[32, 32]}>
             <Col span={24}>
               <Card>
-                {this.state.subject.course_name === "" ? (
+                {this.state.isLoading  === false ? (
                   <Skeleton active />
                 ) : (
                   <>
@@ -135,7 +139,7 @@ class OwnerAddCourse extends React.Component {
             </h2>
             </Row>
             <Row span={24}>
-            {this.state.attendance.length === 0 ? (
+            {this.state.isLoading  === false ? (
                  <Card style={{width: "100%"}} > <Skeleton active /> </Card>
                 ) : (
             <Table columns={columns} dataSource={this.state.attendance} style={{width: "100%"}} />
