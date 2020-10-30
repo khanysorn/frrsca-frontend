@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout, Card, Col, Row, Skeleton  } from "antd";
 import { withRouter } from "react-router-dom";
+import ContentLayoutStyle from "../../components/ContentLayoutStyle"
 import MenuBar from "../../components/Menu";
 import axios from 'axios'
 const { Header, Content, Footer} = Layout;
@@ -44,7 +45,7 @@ render() {
         <Header>
         <MenuBar/>
         </Header>
-        <Content style={{ padding: "0 50px", minHeight: "calc(100vh - 134px)" }} >
+        <Content style={ContentLayoutStyle} >
           <h1 style={{ marginTop: "20px" }}>ห้องเรียนของฉัน</h1>
             <div className="site-card-wrapper">
               <Row gutter={[32,32]}>

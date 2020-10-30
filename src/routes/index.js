@@ -20,7 +20,7 @@ function Routing() {
       {/* <Route path="/student/class/:id" component={StudentClassList} /> */}
       <Route exact path="/student/class/:id" component={TestFetchDataFromAPI} />
       <Route exact path="/teacher/class" component={TeacherClassList} />
-      <Route exact path="/teacher/classdetail" component={TeacherClassDetail} />
+      <Route exact path="/teacher/class/detail" component={TeacherClassDetail} />
       {/* <Route exact path="/TestSkeleton" component={TestSkeleton} /> */}
       <Route exact path="/TestData" component={TestFetchDataFromAPI} />
     </Switch>

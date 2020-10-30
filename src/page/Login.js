@@ -4,7 +4,7 @@ import firebase from "firebase";
 import app from '../config';
 import { useHistory } from "react-router-dom";
 import LoginBox from '../components/LoginBox'
-import KMUTTLogo from '../assets/image/kmutt.svg'
+// import KMUTTLogo from '../assets/image/kmutt.svg'
 
 
 
@@ -70,11 +70,11 @@ function Login() {
       <div className="background">
       <div style={LoginBox}>
       <h1>เข้าสู่ระบบ</h1>
-        <p>ลงชื่อเข้าใช้ด้วยบัญชีผู้ใช้ของคณะเทคโนโลยีสารสนเทศ
+        <p>ลงชื่อเข้าใช้ด้วยบัญชีผู้ใช้
         <br/ >มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</p>
         <p><Button type="primary" htmlType="submit" size="middle" onClick={mockloginstudent} loading={isLoading1} >ลงชื่อเข้าใช้ในฐานะนักเรียน</Button></p>  
-        <p><Button type="primary" htmlType="submit" onClick={mockloginteacher} loading={isLoading2} disabled>ลงชื่อเข้าใช้ในฐานะอาจารย์ผู้สอน</Button></p>  
-        <p><Button type="primary" htmlType="submit" component={<KMUTTLogo />} onClick={handlelogin} loading={isLoading3} danger disabled>ลงชื่อเข้าใช้ด้วย KMUTT Accounts</Button></p>  
+        <p><Button type="primary" htmlType="submit" onClick={mockloginteacher} loading={isLoading2}>ลงชื่อเข้าใช้ในฐานะอาจารย์ผู้สอน</Button></p>  
+        <p><Button type="primary" htmlType="submit" onClick={handlelogin} loading={isLoading3} danger>ลงชื่อเข้าใช้ด้วย KMUTT Accounts</Button></p>  
       </div>
     </div>
   );

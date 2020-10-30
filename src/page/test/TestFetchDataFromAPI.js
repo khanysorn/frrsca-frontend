@@ -7,6 +7,7 @@ import MenuBar from "../../components/Menu";
 import axios from "axios";
 // import { withRouter, BrowserRouter } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import ContentLayoutStyle from "../../components/ContentLayoutStyle"
 
 const { Header, Content, Footer } = Layout;
 
@@ -119,7 +120,7 @@ class OwnerAddCourse extends React.Component {
             </Col>
             <Col span={6} xs={12} md={6}>
               <Card style={{height: "100%", display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center"}}>
-                <Statistic title="จำนวนครั้งที่มาเรียนสาย" value={this.state.subject.numOfLate1} valueStyle={{ color: "#d0021b" }} extra/>
+                <Statistic title="จำนวนครั้งที่มาเรียนสาย" value={this.state.subject.numOfLate1+this.state.subject.numOfLate2+this.state.subject.numOfLate3} valueStyle={{ color: "#d0021b" }} extra/>
               </Card>
             </Col>
             <Col span={6} xs={12} md={6}>
