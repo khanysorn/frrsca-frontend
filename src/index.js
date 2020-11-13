@@ -11,7 +11,7 @@ const DO_NOT_LOGIN = false;
 runWithAdal(authContext, () => {
 
   // eslint-disable-next-line
-  require('./indexApp.js');
+  // require('Login.js');
 
 },DO_NOT_LOGIN);
 
