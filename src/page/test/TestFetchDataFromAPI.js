@@ -7,7 +7,7 @@ import MenuBar from "../../components/Menu";
 import axios from "axios";
 // import { withRouter, BrowserRouter } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-import ContentLayoutStyle from "../../components/ContentLayoutStyle"
+// import ContentLayoutStyle from "../../components/ContentLayoutStyle"
 
 const { Header, Content, Footer } = Layout;
 
