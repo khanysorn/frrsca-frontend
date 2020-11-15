@@ -3,9 +3,9 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import PageNotFound from "../page/404"
 import Home from "../page/Home";
 import Login from "../page/Login";
-import StudentClassList from "../page/student/Class";
+import StudentClassList from "../page/student/ClassList";
 import StudentClassDetail from "../page/student/ClassDetail";
-import TeacherClassList from "../page/teacher/Class";
+import TeacherClassList from "../page/teacher/ClassList";
 import TeacherClassSummary from "../page/teacher/Summary";
 import TeacherClassAttendance from "../page/teacher/Attendance"
 import TeacherClassStudentList from "../page/teacher/StudentList"
