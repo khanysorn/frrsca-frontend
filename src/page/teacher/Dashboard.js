@@ -2,7 +2,8 @@ import React from "react";
 import { Layout, Breadcrumb } from 'antd';
 import MenuBar from '../../components/teacher/Menu'
 import User from '../../components/User'
-const { Header, Content, Footer, Sider } = Layout;
+import Footer from '../../components/Footer';
+const { Header, Content, Sider } = Layout;
 
 
 class ClassDetail extends React.Component {
@@ -44,7 +45,7 @@ class ClassDetail extends React.Component {
           Bill is a cat. 
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+      <Footer/>
     </Layout>
   </Layout>
   );

@@ -4,7 +4,8 @@ import { withRouter } from "react-router-dom";
 import ContentLayoutStyle from "../../components/ContentLayoutStyle"
 import MenuBar from "../../components/student/Menu";
 import axios from 'axios'
-const { Header, Content, Footer} = Layout;
+import Footer from '../../components/Footer';
+const { Header, Content} = Layout;
 
 
 
@@ -75,9 +76,7 @@ render() {
               </Row>
             </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
+        <Footer/>
       </Layout>
     </>
   );

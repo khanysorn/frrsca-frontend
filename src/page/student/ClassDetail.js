@@ -8,8 +8,8 @@ import axios from "axios";
 // import { withRouter, BrowserRouter } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 // import ContentLayoutStyle from "../../components/ContentLayoutStyle"
-
-const { Header, Content, Footer } = Layout;
+import Footer from '../../components/Footer'
+const { Header, Content } = Layout;
 
 const columns = [
   {
@@ -147,9 +147,7 @@ class OwnerAddCourse extends React.Component {
                 )}
           </Row> 
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
+        <Footer/>
       </Layout>
     );
   }

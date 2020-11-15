@@ -2,7 +2,8 @@ import React from "react";
 import { Layout, Card, Col, Row  } from "antd";
 import { Link } from "react-router-dom";
 import User from '../../components/User'
-const { Header, Content, Footer} = Layout;
+import Footer from '../../components/Footer';
+const { Header, Content} = Layout;
 
 function TeacherClassList() {
   return (
@@ -55,9 +56,7 @@ function TeacherClassList() {
               </Row>
             </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
+        <Footer/>
       </Layout>
     </>
   );

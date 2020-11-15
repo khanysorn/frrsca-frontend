@@ -1,15 +1,10 @@
 import React from "react";
 import { Layout, Card, Col, Row, Skeleton, Statistic, Table, Tag } from "antd";
-// import { Layout, Card, Col, Row, Skeleton, Switch, List, Avatar, Menu, Statistic, Table } from "antd";
-// import { UserOutlined } from "@ant-design/icons";
-import MenuBar from "../../components/Menu";
-// import { Link } from "react-router-dom";
+import MenuBar from "../../components/student/Menu";
 import axios from "axios";
-// import { withRouter, BrowserRouter } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-// import ContentLayoutStyle from "../../components/ContentLayoutStyle"
-
-const { Header, Content, Footer } = Layout;
+import Footer from '../../components/Footer'
+const { Header, Content } = Layout;
 
 const columns = [
   {
@@ -147,9 +142,7 @@ class OwnerAddCourse extends React.Component {
                 )}
           </Row> 
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
+        <Footer/>
       </Layout>
     );
   }
