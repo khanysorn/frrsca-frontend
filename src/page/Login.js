@@ -3,11 +3,7 @@ import {Button} from "antd";
 import firebase from "firebase";
 import app from '../config';
 import { useHistory } from "react-router-dom";
-import LoginBox from '../components/LoginBox'
-// import KMUTTLogo from '../assets/image/kmutt.svg'
-
-
-
+import ModalBox from '../components/ModalBox'
 
 
 function Login() {
@@ -68,7 +64,7 @@ function Login() {
   
   return (
       <div className="background">
-      <div style={LoginBox}>
+      <div style={ModalBox}>
       <h1>เข้าสู่ระบบ</h1>
         <p>ลงชื่อเข้าใช้ด้วยบัญชีผู้ใช้
         <br/ >มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</p>
