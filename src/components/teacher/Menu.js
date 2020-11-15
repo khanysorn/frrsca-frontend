@@ -1,17 +1,26 @@
 import React from "react";
-import { Menu } from "antd";
-import MenuBarStyle from '../MenuBarStyle';
-// import { Link } from "react-router-dom";
+import { Menu, Button } from "antd";
+import {
+  DashboardOutlined,
+  FormOutlined,
+  UserOutlined,
+  BookOutlined,
+  SettingOutlined
+} from '@ant-design/icons';
+import { useLocation } from "react-router-dom";
 
-
-
-function MenuBar() {
+const MenuBar = () => {
+    const location = useLocation();
+    const path = location.pathname.split("/").reverse()[0]
     return(    
-    <Menu theme="light" mode="horizontal" defaultSelectedKeys={["1"]} style={MenuBarStyle}>
-    <Menu.Item key="1">ห้องเรียนของคุณ</Menu.Item>
-    <Menu.Item key="2">บัญชีผู้ใช้ของคุณ</Menu.Item>
-    </Menu>)
-
-  }
+      <Menu theme="light" defaultSelectedKeys={[path]} mode="inline">
+      <Button type="primary" shape="round" icon={<DashboardOutlined />} size={'normal'} style={{margin: '8px'}}>Real-time Dashboard</Button>
+        <Menu.Item key="summary" icon={<DashboardOutlined />} >ภาพรวมรายวิชา</Menu.Item>
+        <Menu.Item key="attendance" icon={<FormOutlined />} >การเช็กชื่อ</Menu.Item>
+        <Menu.Item key="list" icon={<UserOutlined />}>รายชื่อนักศึกษา</Menu.Item>
+        <Menu.Item key="report" icon={<BookOutlined />}>รายงาน</Menu.Item>
+        <Menu.Item key="setting" icon={<SettingOutlined />}>การตั้งค่า</Menu.Item>
+      </Menu>)
+}
   
   export default MenuBar;
