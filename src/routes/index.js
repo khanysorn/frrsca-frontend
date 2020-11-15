@@ -1,5 +1,6 @@
 import React from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import PageNotFound from "../page/404"
 import Home from "../page/Home";
 import Login from "../page/Login";
 import StudentClassList from "../page/student/Class";
@@ -30,6 +31,7 @@ function Routing() {
       <Route exact path="/teacher/class/student/report" component={TeacherClassReport} />
       <Route exact path="/teacher/class/setting" component={TeacherClassSetting} />
       <Route exact path="/teacher/class/dashboard" component={TeacherClassDashboard} />
+      <Route component={PageNotFound} />
     </Switch>
   </Router>
   )
