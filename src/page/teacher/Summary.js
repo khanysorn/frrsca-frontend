@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout, Breadcrumb } from 'antd';
 import MenuBar from '../../components/teacher/Menu'
+import User from '../../components/User'
 const { Header, Content, Footer, Sider } = Layout;
 
 
@@ -29,7 +30,9 @@ class ClassDetail extends React.Component {
       <MenuBar  />
     </Sider>
     <Layout className="site-layout">
-      <Header className="site-layout-background" style={{ padding: 0 }} />
+      <Header className="site-layout-background" style={{ padding: 0 }} >
+        <User/>
+        </Header>
       <Content style={{ margin: '0 16px' }}>
         <h1 style={{fontSize: '28px', margin: '16px 0'}}>ภาพรวมรายวิชา</h1>
         <Breadcrumb style={{ margin: '16px 0' }}>

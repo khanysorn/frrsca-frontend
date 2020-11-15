@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout, Breadcrumb, Table, Space } from 'antd';
 import MenuBar from '../../components/teacher/Menu'
+import User from '../../components/User'
 const { Header, Content, Footer, Sider } = Layout;
 
 const columns = [
@@ -76,7 +77,9 @@ class ClassDetail extends React.Component {
       <MenuBar  />
     </Sider>
     <Layout className="site-layout">
-      <Header className="site-layout-background" style={{ padding: 0 }} />
+      <Header className="site-layout-background" style={{ padding: 0 }} >
+      <User/>
+      </Header>
       <Content style={{ margin: '0 16px' }}>
         <h1 style={{fontSize: '28px', margin: '16px 0'}}>การเช็กชื่อ</h1>
         <Breadcrumb style={{ margin: '16px 0' }}>

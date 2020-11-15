@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout, Card, Col, Row  } from "antd";
 import { Link } from "react-router-dom";
-
+import User from '../../components/User'
 const { Header, Content, Footer} = Layout;
 
 function TeacherClassList() {
@@ -9,10 +9,10 @@ function TeacherClassList() {
     <>
       <Layout className="layout">
         <Header>
+            <User/>
         </Header>
         <Content style={{ padding: "0 50px", minHeight: "calc(100vh - 134px)" }} >
           <h1 style={{ marginTop: "20px" }}>ห้องเรียนของคุณ</h1>
-          
             <div className="site-card-wrapper">
               <Row gutter={[32,32]}>
                 <Col xs={24} md={8} >

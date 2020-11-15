@@ -1,18 +1,11 @@
 import React from "react";
 import { Layout, Breadcrumb } from 'antd';
 import MenuBar from '../../components/teacher/Menu'
+import User from '../../components/User'
 const { Header, Content, Footer, Sider } = Layout;
 
 
 class ClassDetail extends React.Component {
-
-  // Jew witten
-  // onClickMenu = (id) => {
-  //   console.log(id)
-  // }
-  //   onclickmenu = (id) => {
-  //   this.props.idpage(id)
-  // }
 
   state = {
     collapsed: false,
@@ -28,7 +21,6 @@ class ClassDetail extends React.Component {
   };
 
 
-
   render() {
     const { collapsed } = this.state;
     
@@ -39,7 +31,9 @@ class ClassDetail extends React.Component {
       <MenuBar  />
     </Sider>
     <Layout className="site-layout">
-      <Header className="site-layout-background" style={{ padding: 0 }} />
+      <Header className="site-layout-background" style={{ padding: 0 }} >
+        <User/>
+        </Header>
       <Content style={{ margin: '0 16px' }}>
         <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>วิชาของคุณ</Breadcrumb.Item>
