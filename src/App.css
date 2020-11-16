@@ -30,7 +30,7 @@ body{
 }
 
 .background{
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(assets/image/background_sit.png);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(assets/image/background_sit.jpg);
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
@@ -56,3 +56,4 @@ body{
   padding: 32px 8px 16px;
   background: rgba(150, 150, 150, 0.2);
 }
+

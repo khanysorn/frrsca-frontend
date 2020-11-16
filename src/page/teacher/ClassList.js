@@ -1,20 +1,19 @@
 import React from "react";
 import { Layout, Card, Col, Row  } from "antd";
 import { Link } from "react-router-dom";
-import MenuBar from "../../components/teacher/Menu";
+import User from '../../components/User'
+import Footer from '../../components/Footer';
+const { Header, Content} = Layout;
 
-const { Header, Content, Footer} = Layout;
-
-function Class() {
+function TeacherClassList() {
   return (
     <>
       <Layout className="layout">
         <Header>
-        <MenuBar/>
+            <User/>
         </Header>
         <Content style={{ padding: "0 50px", minHeight: "calc(100vh - 134px)" }} >
           <h1 style={{ marginTop: "20px" }}>ห้องเรียนของคุณ</h1>
-          
             <div className="site-card-wrapper">
               <Row gutter={[32,32]}>
                 <Col xs={24} md={8} >
@@ -57,12 +56,10 @@ function Class() {
               </Row>
             </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
+        <Footer/>
       </Layout>
     </>
   );
 }
 
-export default Class;
+export default TeacherClassList;

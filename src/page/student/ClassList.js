@@ -2,15 +2,11 @@ import React from "react";
 import { Layout, Card, Col, Row, Skeleton  } from "antd";
 import { withRouter } from "react-router-dom";
 import ContentLayoutStyle from "../../components/ContentLayoutStyle"
-import MenuBar from "../../components/Menu";
+import MenuBar from "../../components/student/Menu";
 import axios from 'axios'
-const { Header, Content, Footer} = Layout;
+import Footer from '../../components/Footer';
+const { Header, Content} = Layout;
 
-
-//  const data = [{id : 'INT 206' ,name : "การบริหารโครงการซอฟต์แวร์" , section : "SECTION 1" },
-//  {id : 'INT 206' ,name : "การบริหารโครงการซอฟต์แวร์" , section : "SECTION 1" },
-//  {id : 'INT 206' ,name : "การบริหารโครงการซอฟต์แวร์" , section : "SECTION 1" },
-//  {id : 'INT 206' ,name : "การบริหารโครงการซอฟต์แวร์" , section : "SECTION 1" }]
 
 
 class StudentClass extends React.Component {
@@ -80,9 +76,7 @@ render() {
               </Row>
             </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
+        <Footer/>
       </Layout>
     </>
   );
