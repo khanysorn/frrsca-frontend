@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Breadcrumb, Table, Space } from 'antd';
+import { Layout, Breadcrumb, Table, Space, Button } from 'antd';
 import MenuBar from '../../components/teacher/Menu'
 import User from '../../components/User'
 import Footer from '../../components/Footer';
@@ -88,6 +88,7 @@ class ClassDetail extends React.Component {
           <Breadcrumb.Item>INT305</Breadcrumb.Item>
           <Breadcrumb.Item>การเช็กชื่อ</Breadcrumb.Item>
         </Breadcrumb>
+        <Button type="primary" size={'normal'} style={{ margin: '16px 0' }}>สร้างรายการเช็กชื่อ</Button>
         <div className="site-layout-background">
           <Table columns={columns} dataSource={this.state.attendance} style={{width: "100%"}} bordered />
         </div>
