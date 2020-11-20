@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, Button } from "antd";
+import { Menu } from "antd";
 import {
   DashboardOutlined,
   FormOutlined,
@@ -9,17 +9,24 @@ import {
 } from '@ant-design/icons';
 import { useLocation, Link } from "react-router-dom";
 
+const { SubMenu } = Menu;
+
 const MenuBar = () => {
     const location = useLocation();
-    const path = location.pathname.split("/").reverse()[0]
+    // const path = location.pathname.split("/").reverse()[0]
+    const path = location.pathname
     return(    
       <Menu theme="light" defaultSelectedKeys={[path]} mode="inline">
-        <Button type="primary" shape="round" icon={<DashboardOutlined />} size={'normal'} style={{margin: '8px'}}>Real-time Dashboard</Button>
-        <Menu.Item key="summary" icon={<DashboardOutlined />}><Link to="/teacher/class/summary">ภาพรวมรายวิชา</Link></Menu.Item>
-        <Menu.Item key="attendance" icon={<FormOutlined />}><Link to="/teacher/class/student/attendance">การเช็กชื่อ</Link></Menu.Item>
-        <Menu.Item key="list" icon={<UserOutlined />}><Link to="/teacher/class/student/list">รายชื่อนักศึกษา</Link></Menu.Item>
-        <Menu.Item key="report" icon={<BookOutlined />}><Link to="/teacher/class/student/report">รายงาน</Link></Menu.Item>
-        <Menu.Item key="setting" icon={<SettingOutlined />}><Link to="/teacher/class/setting">การตั้งค่า</Link></Menu.Item>
+        <div className="logo" />
+        {/* <Button type="primary" shape="round" icon={<DashboardOutlined />} size={'normal'} style={{margin: '8px'}}>Real-time Dashboard</Button> */}
+        <Menu.Item key="/teacher/class/summary" icon={<DashboardOutlined />}><Link to="/teacher/class/summary">ภาพรวมรายวิชา</Link></Menu.Item>
+        <Menu.Item key="/teacher/class/attendance" icon={<FormOutlined />}><Link to="/teacher/class/attendance">การเช็กชื่อ</Link></Menu.Item>
+        <Menu.Item key="/teacher/class/studentlist" icon={<UserOutlined />}><Link to="/teacher/class/studentlist">รายชื่อนักศึกษา</Link></Menu.Item>
+        <SubMenu key="report" icon={<BookOutlined />} title={"รายงาน"}>
+        <Menu.Item key="/teacher/class/report/attendance" icon={<UserOutlined />}><Link to="/teacher/class/report/attendance">ตามรายการเช็กชื่อ</Link></Menu.Item>
+        <Menu.Item key="/teacher/class/report/student" icon={<UserOutlined />}><Link to="/teacher/class/report/student">ตามรายชื่อนักศึกษา</Link></Menu.Item>
+        </SubMenu>
+        <Menu.Item key="/teacher/class/setting" icon={<SettingOutlined />}><Link to="/teacher/class/setting">การตั้งค่า</Link></Menu.Item>
       </Menu>)
 }
   
