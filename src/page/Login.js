@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import {Button} from "antd";
-import firebase from "firebase";
-import app from '../config';
 import { useHistory } from "react-router-dom";
 import ModalBox from '../components/ModalBox'
 
