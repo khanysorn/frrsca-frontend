@@ -6,8 +6,6 @@ import ModalBox from '../components/ModalBox'
 
 function Login() {
 
-  const provider = new firebase.auth.OAuthProvider('microsoft.com');
-
   const history = useHistory();
 
   const [isLoading1,setLoading1] = useState(false);
@@ -16,27 +14,27 @@ function Login() {
 
   const [isLoading3,setLoading3] = useState(false);
 
-  function handlelogin(){
-    setLoading3(true);
-    setTimeout(()=>{
-      setLoading1(false);
-      history.push("/student/class")
-  },1000)
-    app.auth().signInWithPopup(provider)
-    firebase.auth().signInWithPopup(provider)
-    .then(function(result) {
-      // User is signed in.
-      // IdP data available in result.additionalUserInfo.profile.
-      // OAuth access token can also be retrieved:
-      // result.credential.accessToken
-      // OAuth ID token can also be retrieved:
-      // result.credential.idToken
-      history.push("/student/class")
-    })
-    .catch(function(error) {
-      // Handle error.
-    });
-  }
+//   function handlelogin(){
+//     setLoading3(true);
+//     setTimeout(()=>{
+//       setLoading1(false);
+//       history.push("/student/class")
+//   },1000)
+//     app.auth().signInWithPopup(provider)
+//     firebase.auth().signInWithPopup(provider)
+//     .then(function(result) {
+//       // User is signed in.
+//       // IdP data available in result.additionalUserInfo.profile.
+//       // OAuth access token can also be retrieved:
+//       // result.credential.accessToken
+//       // OAuth ID token can also be retrieved:
+//       // result.credential.idToken
+//       history.push("/student/class")
+//     })
+//     .catch(function(error) {
+//       // Handle error.
+//     });
+//   }
 
   function mockloginstudent(){
     setLoading1(true);
@@ -67,8 +65,7 @@ function Login() {
         <p>ลงชื่อเข้าใช้ด้วยบัญชีผู้ใช้
         <br/ >มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</p>
         <p><Button type="primary" htmlType="submit" size="middle" onClick={mockloginstudent} loading={isLoading1} >ลงชื่อเข้าใช้ในฐานะนักเรียน</Button></p>  
-        <p><Button type="primary" htmlType="submit" onClick={mockloginteacher} loading={isLoading2}>ลงชื่อเข้าใช้ในฐานะอาจารย์ผู้สอน</Button></p>  
-        <p><Button type="primary" htmlType="submit" onClick={handlelogin} loading={isLoading3} danger>ลงชื่อเข้าใช้ด้วย KMUTT Accounts</Button></p>  
+        <p><Button type="primary" htmlType="submit" onClick={mockloginteacher} loading={isLoading2}>ลงชื่อเข้าใช้ในฐานะอาจารย์ผู้สอน</Button></p>    
       </div>
     </div>
   );
