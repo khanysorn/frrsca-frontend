@@ -1,6 +1,10 @@
-import HttpRequest from './http_request'
+import HttpRequest from './http_request_class'
 
 class ClassProvider extends HttpRequest{
+    authentodb(payload){
+        return this.post("api/v1/class/attendance/authentodb",payload)
+    }
+
     attendancehistorystudent(payload){
         const useMock = false;
         return useMock ? new ClassProviderMock().attendancehistorystudent(payload) : this.post("/api/v1/class/attendance/attendancehistorystudent",payload)
@@ -12,6 +16,16 @@ class ClassProvider extends HttpRequest{
 
     getlistcourseforstudent(payload){
         return this.post("api/v1/class/attendance/getlistcourseforstudent",payload)
+    }
+
+    getreportbystudent(payload){
+        const useMock = true;
+        return useMock ? new ClassProviderMock().getreportbystudent(payload) : this.post("/api/v1/class/attendance/attendancehistorystudent",payload)
+    }
+
+    
+    getlistallstudentenrollcourse(payload){
+        return this.post("/api/v1/class/attendance/getlistallstudentenrollcourse",payload)
     }
 }
 
@@ -43,6 +57,23 @@ class ClassProviderMock {
         })
     }
 
+    getreportbystudent(payload){
+        return new Promise((resolve,reject) => {
+            resolve({
+                data:[
+                    {
+                        "student_id": "60130500001",
+                        "name_th": "กรวรรณ มโนรมย์",
+                        "numOfOnTime": 5,
+                        "numOfLate1": 2,
+                        "numOfLate2": 1,
+                        "numOfLate3": 0,
+                        "numOfAbsence": 0,
+                        "numOfLeave": 0
+                    }
+                ]})
+        })
+    }
 }
 
 
