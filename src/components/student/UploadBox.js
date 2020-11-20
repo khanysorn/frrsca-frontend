@@ -1,8 +1,8 @@
 const UploadBox = {
     backgroundColor: "white",
     width: "100%",
-    height: "500px",
-    padding: "48px",
+    height: "100%",
+    padding: "36px",
     boxSizing: "border-box"
   
   }
