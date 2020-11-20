@@ -76,13 +76,6 @@ function Login(props) {
   setLoading3(false);
   }
 
-
-  function mockloginstudent(){
-    setLoading1(true);
-    // return from backend {id : '123'}
-    // const res = {id : '123'}
-    // localStorage.setItem('userId', res.id)
-
   // function mockloginstudent(){
   //   setLoading1(true);
   //   // return from backend {id : '123'}
