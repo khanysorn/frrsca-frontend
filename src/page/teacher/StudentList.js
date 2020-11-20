@@ -1,9 +1,43 @@
 import React from "react";
-import { Layout, Breadcrumb } from 'antd';
+import { Layout, Breadcrumb, Table, Avatar, Space } from 'antd';
 import MenuBar from '../../components/teacher/Menu'
 import User from '../../components/User'
 import Footer from '../../components/Footer';
 const { Header, Content, Sider } = Layout;
+
+
+const columns = [
+  {
+    title: '',
+    dataIndex: 'runningnumber',
+    render: () => (
+      <Avatar />
+    ),
+  },
+  {
+    title: 'รหัสนักศึกษา',
+    dataIndex: 'timestamp',
+    key: 'timestamp',
+  },
+  {
+    title: 'ชื่อ - นามสกุล',
+    key: 'isontime',
+    dataIndex: 'isontime'
+  },
+  {
+    title: 'อีเมลแอดเดรส',
+    key: 'isontime',
+    dataIndex: 'isontime'
+  },
+  {
+    title: 'ดำเนินการ',
+    render: (text, record) => (
+      <Space size="middle">
+        <a>ลบ</a>
+      </Space>
+    )
+  }
+];
 
 
 class ClassDetail extends React.Component {
@@ -41,9 +75,8 @@ class ClassDetail extends React.Component {
           <Breadcrumb.Item>INT305</Breadcrumb.Item>
           <Breadcrumb.Item>รายชื่อนักศึกษา</Breadcrumb.Item>
         </Breadcrumb>
-        <div className="site-layout-background" style={{ padding: 24 }}>
-          <h1 style={{fontSize: '24px'}}>INT307</h1>
-          <h2 style={{fontSize: '18px'}}>ประเด็นทางสังคมและจริยธรรมสำหรับนักเทคโนโลยีสารสนเทศ</h2>
+        <div className="site-layout-background">
+            <Table columns={columns} dataSource={this.state.attendance} style={{width: "100%"}} bordered />
         </div>
 
       </Content>
