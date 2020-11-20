@@ -33,7 +33,7 @@ const columns = [
     title: 'ดำเนินการ',
     render: (text, record) => (
       <Space size="middle">
-        <a>ลบ</a>
+        <a href="https://lel">ลบ</a>
       </Space>
     )
   }

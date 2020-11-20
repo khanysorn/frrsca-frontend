@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Card, Col, Row, Skeleton, Select, message } from "antd";
+import { Layout, Card, Col, Row, Skeleton, Select } from "antd";
 import { withRouter } from "react-router-dom";
 import ContentLayoutStyle from "../../components/ContentLayoutStyle"
 import MenuBar from "../../components/student/Menu";
@@ -10,11 +10,11 @@ const { Header, Content} = Layout;
 const { Option } = Select;
 
 
-
-function handleMenuClick(e) {
-  message.info('Click on menu item.');
-  console.log('click', e);
-}
+// เดี๋ยวกลับมา
+// function handleMenuClick(e) {
+//   message.info('Click on menu item.');
+//   console.log('click', e);
+// }
 
 
 class StudentClass extends React.Component {
