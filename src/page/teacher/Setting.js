@@ -1,11 +1,22 @@
 import React from "react";
-import { Layout, Breadcrumb } from 'antd';
+import { Layout, Breadcrumb, Form, Input, Button } from 'antd';
+// import { FormInstance } from 'antd/lib/form';
 import MenuBar from '../../components/teacher/Menu'
 import User from '../../components/User'
 import Footer from '../../components/Footer';
 const { Header, Content, Sider } = Layout;
 
-class ClassDetail extends React.Component {
+// const { Option } = Select;
+
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
+
+class Setting extends React.Component {
 
   state = {
     collapsed: false,
@@ -41,10 +52,37 @@ class ClassDetail extends React.Component {
           <Breadcrumb.Item>การตั้งค่า</Breadcrumb.Item>
         </Breadcrumb>
         <div className="site-layout-background" style={{ padding: 24 }}>
-          <h1 style={{fontSize: '24px'}}>INT307</h1>
-          <h2 style={{fontSize: '18px'}}>ประเด็นทางสังคมและจริยธรรมสำหรับนักเทคโนโลยีสารสนเทศ</h2>
-        </div>
-
+        <Form {...layout} ref={this.formRef} name="control-ref" onFinish={this.onFinish}>
+        <Form.Item name="note" label="ชื่อวิชา (ภาษาไทย)" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item name="note" label="Subject Title (English)" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+        
+        <Form.Item
+          noStyle
+          shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}
+        >
+          {({ getFieldValue }) => {
+            return getFieldValue('gender') === 'other' ? (
+              <Form.Item
+                name="customizeGender"
+                label="Customize Gender"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            ) : null;
+          }}
+        </Form.Item>
+        <Form.Item {...tailLayout}>
+          <Button type="primary" htmlType="submit">
+            บันทึกข้อมูล
+          </Button>
+        </Form.Item>
+      </Form>
+      </div>
       </Content>
       <Footer/>
     </Layout>
@@ -53,4 +91,4 @@ class ClassDetail extends React.Component {
   }
   }
 
-export default ClassDetail;
+export default Setting;

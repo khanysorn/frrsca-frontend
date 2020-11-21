@@ -1,14 +1,9 @@
 import React from "react";
 import { Layout, Card, Col, Row, Skeleton, Statistic, Table, Tag } from "antd";
-// import { Layout, Card, Col, Row, Skeleton, Switch, List, Avatar, Menu, Statistic, Table } from "antd";
-// import { UserOutlined } from "@ant-design/icons";
 import MenuBar from "../../components/student/Menu";
-// import { Link } from "react-router-dom";
-import axios from "axios";
-// import { withRouter, BrowserRouter } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-// import ContentLayoutStyle from "../../components/ContentLayoutStyle"
 import Footer from '../../components/Footer'
+import ClassProvider from '../../services/class_provider'
 const { Header, Content } = Layout;
 
 const columns = [
@@ -38,6 +33,8 @@ class OwnerAddCourse extends React.Component {
   state = {
     subject: {
     course_name: "",
+    section_name: "",
+    lecturer_name: "",
     },
     attendance: [],
     isLoading: false
@@ -48,38 +45,35 @@ class OwnerAddCourse extends React.Component {
   }
 
   getSubject = async () => {
-    // this.props.match.params.id
     this.state.isLoading = true;
-    const res1 = await axios.post(
-      "https://frrsca-backend.khanysorn.me/api/v1/class/attendance/attendancehistorystudent",
-      {
+    try{
+      const result1 = await ClassProvider.attendancehistorystudent({
         course_code: this.props.match.params.id,
-        student_id: "60130500138",
-      },
-      { header: { "Access-Control-Allow-Origin": true } }
-    );
-    console.log(res1.data);
-    this.setState({ subject: res1.data });
+        student_id: localStorage.getItem("user"),
+      })
+      console.log(result1)
+      this.setState({ subject: result1.data });
 
-    const res2 = await axios.post(
-      "https://frrsca-backend.khanysorn.me/api/v1/class/attendance/gettimeofcourse",
-      {
+      const result2 = await ClassProvider.gettimeofcourse({
         course_code: this.props.match.params.id,
-        student_id: "60130500138",
-      },
-      { header: { "Access-Control-Allow-Origin": true } }
-    );
-    console.log(res2.data);
-    for (let i=0; i<res2.data.length; i++){
-      res2.data[i].runningnumber=i;
+        student_id: localStorage.getItem("user"),
+      })
+      console.log(result2)
+      for (let i=0; i<result2.data.length; i++){
+        result2.data[i].runningnumber=i;
+        
+      }
+      this.setState({ attendance: result2.data });
+      this.state.isLoading = false;
+    }catch(e){
+      this.state.isLoading = false;
+      console.log(e)
     }
-    this.setState({ attendance: res2.data });
-    this.state.isLoading = false;
+
+
   };
 
   render() {
-
-    console.log(this.props.match.params.id);
     
     return (
       <Layout className="layout">
@@ -96,12 +90,10 @@ class OwnerAddCourse extends React.Component {
                   <>
                     <h1>{this.state.subject.course_code}</h1>
                     <h2>{this.state.subject.course_name}</h2>
-                    {/* <p>กลุ่มเรียน: 1</p>
+                    <p>กลุ่มเรียน: {this.state.subject.section_name}</p>
                     <p>
-                      อาจารย์ผู้สอน:{" "}
-                      <Avatar size="small" icon={<UserOutlined />} /> อ.คณิศร
-                      ชัยวิชาชาญ
-                    </p> */}
+                      อาจารย์ผู้สอน: {this.state.subject.lecturer_name}
+                    </p>
                   </>
                 )}
               </Card>
@@ -115,22 +107,36 @@ class OwnerAddCourse extends React.Component {
           <Row gutter={[32, 32]}>
             <Col span={6} xs={12} md={6}>
               <Card style={{height: "100%", display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center"}}>
-                <Statistic title="จำนวนครั้งที่มาเรียนตรงเวลา" value={this.state.subject.numOfOnTime} valueStyle={{ color: "#3f8600"}}/>
+              {this.state.isLoading  === false ? (
+                  <Skeleton active paragraph={{ rows: 2 }}/>
+                ) : (<Statistic title="จำนวนครั้งที่มาเรียนตรงเวลา" value={this.state.subject.numOfOnTime} valueStyle={{ color: "#3f8600"}}/>)}
               </Card>
             </Col>
             <Col span={6} xs={12} md={6}>
               <Card style={{height: "100%", display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center"}}>
+              {this.state.isLoading  === false ? (
+                  <Skeleton active paragraph={{ rows: 2 }}/>
+                ) : (
                 <Statistic title="จำนวนครั้งที่มาเรียนสาย" value={this.state.subject.numOfLate1+this.state.subject.numOfLate2+this.state.subject.numOfLate3} valueStyle={{ color: "#d0021b" }} extra/>
+                )}
               </Card>
             </Col>
             <Col span={6} xs={12} md={6}>
               <Card style={{height: "100%", display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center"}}>
+              {this.state.isLoading  === false ? (
+                  <Skeleton active paragraph={{ rows: 2 }}/>
+                ) : (
                 <Statistic title="จำนวนครั้งที่ขาดเรียน" value={this.state.subject.numOfAbsence} valueStyle={{ color: "#f8e71c" }}/>
+                )}
               </Card>
             </Col>
             <Col span={6} xs={12} md={6}>
               <Card style={{height: "100%", display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center"}}>
+              {this.state.isLoading  === false ? (
+                  <Skeleton active paragraph={{ rows: 2 }}/>
+                ) : (
                 <Statistic title="จำนวนครั้งที่ลาเรียน" value="0" valueStyle={{ color: "#595959" }}/>
+                )}
               </Card>
             </Col>
           </Row>

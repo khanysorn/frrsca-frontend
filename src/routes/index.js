@@ -9,7 +9,8 @@ import TeacherClassList from "../page/teacher/ClassList";
 import TeacherClassSummary from "../page/teacher/Summary";
 import TeacherClassAttendance from "../page/teacher/Attendance"
 import TeacherClassStudentList from "../page/teacher/StudentList"
-import TeacherClassReport from "../page/teacher/Report"
+import TeacherClassReportAttendance from "../page/teacher/ReportByAttendance"
+import TeacherClassReportStudent from "../page/teacher/ReportByStudent"
 import TeacherClassSetting from "../page/teacher/Setting"
 import TeacherClassDashboard from "../page/teacher/Dashboard"
 import UploadFace from "../page/student/UploadFace";
@@ -26,9 +27,10 @@ function Routing() {
       <Route exact path="/student/upload" component={UploadFace} /> 
       <Route exact path="/teacher/class" component={TeacherClassList} />
       <Route exact path="/teacher/class/summary" component={TeacherClassSummary} />
-      <Route exact path="/teacher/class/student/attendance" component={TeacherClassAttendance} />
-      <Route exact path="/teacher/class/student/list" component={TeacherClassStudentList} />
-      <Route exact path="/teacher/class/student/report" component={TeacherClassReport} />
+      <Route exact path="/teacher/class/attendance" component={TeacherClassAttendance} />
+      <Route exact path="/teacher/class/studentlist" component={TeacherClassStudentList} />
+      <Route exact path="/teacher/class/report/attendance" component={TeacherClassReportAttendance} />
+      <Route exact path="/teacher/class/report/student" component={TeacherClassReportStudent} />
       <Route exact path="/teacher/class/setting" component={TeacherClassSetting} />
       <Route exact path="/teacher/class/dashboard" component={TeacherClassDashboard} />
       <Route component={PageNotFound} />
