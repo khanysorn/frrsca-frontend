@@ -59,7 +59,7 @@ function Login(props) {
     const url = 'https://gatewayservice.sit.kmutt.ac.th/api/oauth/token'
     const secret = 'iPJIgH6dy4lTw1VBWYe3R2NjA'
     const clientId = "iNX5UkwC"
-    const resFromSSO = await fetch(`${url}?client_secret=${secret}&client_id=${clientId}&code=${parsed.code}&redirect_uri=http://localhost:3000/Login`)
+    const resFromSSO = await fetch(`${url}?client_secret=${secret}&client_id=${clientId}&code=${parsed.code}&redirect_uri=https://frrsca-frontend-staging-boss.khanysorn.me/Login`)
     // const user = await Login(await resFromSSO.json())
     const resFromSSOData = await resFromSSO.json()
     console.log(resFromSSOData)
