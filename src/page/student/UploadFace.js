@@ -4,18 +4,24 @@ import { InboxOutlined } from "@ant-design/icons";
 import { withRouter } from "react-router-dom";
 import ContentLayoutStyle from "../../components/ContentLayoutStyle";
 import MenuBar from "../../components/student/Menu";
-import axios from "axios";
+import AuthenProvider from "../../services/authen_provider";
+import ClassProvider from "../../services/class_provider";
 import Footer from "../../components/Footer";
 import UploadBox from "../../components/student/UploadBox";
+import { setUser } from '../../helper'
+import { getUploadImageURL } from '../../helper';
+
 const { Header, Content } = Layout;
 
 const { Dragger } = Upload;
 
 const props = {
-  name: "file",
-  multiple: true,
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+  name: "image",
+  accept: ".jpg,.jpeg,.png",
+  multiple: false,
+  // action: getUploadImageURL(),
   onChange(info) {
+    console.log(info)
     const { status } = info.file;
     if (status !== "กำลังอัปโหลด") {
       console.log(info.file, info.fileList);
@@ -29,24 +35,52 @@ const props = {
 };
 
 class UploadFace extends React.Component {
-  state = {
-    data: [],
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: [],
+      name: "",
+      userid: "",
+      image: null
+    }
+    this.onFileChange = this.onFileChange.bind(this)
+  }
 
-  componentDidMount() {}
 
-  getSubjectList = async () => {
-    // this.props.match.params.id
-    const res = await axios.post(
-      "https://frrsca-backend.khanysorn.me/api/v1/class/attendance/getlistcourseforstudent",
-      {
-        student_id: "60130500138",
-      },
-      { header: { "Access-Control-Allow-Origin": true } }
-    );
-    console.log(res.data);
-    this.setState({ data: res.data });
-  };
+  async onFileChange(info){
+    console.log(info)
+    console.log(info.file) // should contain originFileObj
+    let formData = new FormData()
+    formData.append('image', info.file.originFileObj)
+    await ClassProvider.addStudentImage("60130500008", formData)
+    info.file.status = 'done'
+  }
+
+  async componentDidMount() {
+    this.setState({isLoading: true})
+    if (localStorage.getItem("token")){
+      try{
+        const result = await AuthenProvider.fetchme()
+        console.log(result.data)
+        // const { user_type } = result.data
+        const user = result.data
+        // save data into local storage
+        setUser(user)
+        this.setState({ user: user })
+        if(user.user_type !== "st_group") {
+          this.props.history.push("/Unauthorized")
+        } 
+      } catch(e) {
+        console.log(e)
+      } finally {
+        this.setState({isLoading: false})
+      }
+        
+    } else {
+      message.error('กรุณาเข้าสู่ระบบ')
+      this.props.history.push("/Login")
+    }
+  }
 
   render() {
     console.log(this.state.data);
@@ -54,7 +88,7 @@ class UploadFace extends React.Component {
       <>
         <Layout className="layout">
           <Header>
-            <MenuBar />
+            <MenuBar user={this.state.user}/>
           </Header>
           <Content style={ContentLayoutStyle}>
             <Row style={{ marginTop: "20px" }} gutter={[32, 32]}>
@@ -94,7 +128,7 @@ class UploadFace extends React.Component {
               </Col>
               <Col xs={24} md={6} style={UploadBox}>
                 <h1 style={{ marginBottom: "20px" }}> อัปโหลดรูปภาพ</h1>
-                <Dragger {...props}>
+                <Dragger {...{...props, onChange: this.onFileChange}} >
                   <p className="ant-upload-drag-icon">
                     <InboxOutlined />
                   </p>

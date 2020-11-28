@@ -1,8 +1,11 @@
 import React from "react";
-import { Layout, Breadcrumb, Table, Space, Button, Modal, Form, DatePicker, TimePicker, Select } from 'antd';
+import { Layout, Breadcrumb, Table, Space, Button, Modal, Form, DatePicker, TimePicker, Select, message } from 'antd';
 import MenuBar from '../../components/teacher/Menu'
 import User from '../../components/User'
 import Footer from '../../components/Footer';
+import AuthenProvider from '../../services/authen_provider'
+import { getUser, setUser } from '../../helper'
+import ClassProvider from '../../services/class_provider'
 const { Header, Content, Sider } = Layout;
 const { Option, OptGroup } = Select;
 
@@ -55,10 +58,108 @@ const layout = {
 
 
 
+
 class ClassDetail extends React.Component {
 
+  constructor(props) {
+    super(props)
+        this.state = {
+        user: {},
+        data:{},
+        subject: {
+        course_code: this.props.match.params.id,
+        course_name: "",
+        section_name: "",
+        },
+        addattendance:{
+          date:"",
+          room_name: "",
+          classtype: "",
+          timestart: "",
+          timeend: "",
+          late1: "",
+          late2: "",
+          late3: ""
+        },
+        attendance: [],
+        isLoading: false,
+        collapsed: false,
+        modalVisible: false
+      };
+  }
 
+  async componentDidMount()  {
+    this.setState({isLoading: true})
+    if (localStorage.getItem("token")){
+      try{
+        const result = await AuthenProvider.fetchme()
+        console.log(result.data)
+        // const { user_type } = result.data
+        const user = result.data
+        // save data into local storage
+        setUser(user)
+        this.setState({ user: user })
+        
+        if(user.user_type !== "inst_group") {
+          this.props.history.push("/Unauthorized")
+        } 
+      } catch(e) {
+        console.log(e)
+      } finally {
+        this.setState({isLoading: false})
+      }
+        
+    } else {
+      message.error('กรุณาเข้าสู่ระบบ')
+      this.props.history.push("/Login")
+    }
+    this.getData()
+  }
+
+  async getData () {
+    this.setState({isLoading: true})
+    try{
+      const result = await ClassProvider.gettimeclass({
+        section_name: this.props.match.params.section,
+        course_code: this.props.match.params.id,
+        semester: "1",
+        academicyear: "2563"
+      })
+      this.setState({ data: result.data })
+      console.log(this.state.data)
+    }catch(e){
+      console.log(e)
+    } finally {
+      this.setState({ isLoading: false})
+    }
+  };
   
+  async addAttendance(data){
+    try{
+      const result = await ClassProvider.createchecklist({
+        section_name: this.props.match.params.section,
+        course_code: this.props.match.params.id,
+        semester: "1",
+        academicyear: "2563",
+        lecturer_user: getUser().user_id,
+        room_name: data.room_name,
+        class_name: "",
+        classtype: data.classtype,
+        timestart: `${data.date} ${data.timestart}`,
+        timeend: `${data.date} ${data.timeend}`,
+        late: `${data.date} ${data.late1}`,
+        late2: `${data.date} ${data.late2}`,
+        late3: `${data.date} ${data.late3}`,
+      })
+      this.setState({ data: result.data })
+      console.log(this.state.data)
+    }catch(e){
+      console.log(e)
+    } finally {
+      this.setState({ isLoading: false})
+    }
+  }
+
   showModal = () => {
     this.setState({
       modalVisible: true,
@@ -77,12 +178,6 @@ class ClassDetail extends React.Component {
     this.setState({
       modalVisible: false,
     });
-  };
-
-
-  state = {
-    collapsed: false,
-    modalVisible: false
   };
 
   onCollapse = collapsed => {
@@ -105,7 +200,7 @@ class ClassDetail extends React.Component {
     </Sider>
     <Layout className="site-layout">
       <Header className="site-layout-background" style={{ padding: 0 }} >
-      <User/>
+      <User user={this.state.user} />
       </Header>
       <Content style={{ margin: '0 16px' }}>
         <h1 style={{fontSize: '28px', margin: '16px 0'}}>การเช็กชื่อ</h1>
@@ -123,23 +218,23 @@ class ClassDetail extends React.Component {
             {/* <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChange}> */}
             <Select style={{ width: 250 }} >
                 <OptGroup label="อาคารเรียน 2">
-                    <Option value="CB2301">CB2301</Option>
-                    <Option value="CB2304">CB2304</Option>
-                    <Option value="CB2305">CB2305</Option>
-                    <Option value="CB2306">CB2306</Option>
-                    <Option value="CB2308">CB2308</Option>
-                    <Option value="CB2312">CB2312</Option>
-                    <Option value="CB2313">CB2313</Option>
+                    <Option value="1">CB2301</Option>
+                    <Option value="2">CB2304</Option>
+                    <Option value="3">CB2305</Option>
+                    <Option value="4">CB2306</Option>
+                    <Option value="5">CB2308</Option>
+                    <Option value="6">CB2312</Option>
+                    <Option value="7">CB2313</Option>
                 </OptGroup>
                 <OptGroup label="อาคารเรียน SIT">
-                    <Option value="Training 1/1">Training 1/1</Option>
-                    <Option value="Training 1/2">Training 1/2</Option>
-                    <Option value="Training 1/3">Training 1/3</Option>
-                    <Option value="Training 1/4">Training 1/4</Option>
-                    <Option value="Training 1/5">Training 1/5</Option>
-                    <Option value="Training 1/6">Training 1/6</Option>
-                    <Option value="Meeting 4/1">Meeting 4/1</Option>
-                    <Option value="Meeting 4/2">Meeting 4/2</Option>
+                    <Option value="8">Training 1/1</Option>
+                    <Option value="9">Training 1/2</Option>
+                    <Option value="10">Training 1/3</Option>
+                    <Option value="11">Training 1/4</Option>
+                    <Option value="12">Training 1/5</Option>
+                    <Option value="13">Training 1/6</Option>
+                    <Option value="14">Meeting 4/1</Option>
+                    <Option value="15">Meeting 4/2</Option>
                 </OptGroup>
             </Select>
             </Form.Item>

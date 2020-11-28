@@ -14,6 +14,8 @@ import TeacherClassReportStudent from "../page/teacher/ReportByStudent"
 import TeacherClassSetting from "../page/teacher/Setting"
 import TeacherClassDashboard from "../page/teacher/Dashboard"
 import UploadFace from "../page/student/UploadFace";
+import Logout from "../page/Logout"
+import Unauthorized from "../page/401"
 
 
 function Routing() {
@@ -26,13 +28,15 @@ function Routing() {
       <Route exact path="/student/class/:id" component={StudentClassDetail} />
       <Route exact path="/student/upload" component={UploadFace} /> 
       <Route exact path="/teacher/class" component={TeacherClassList} />
-      <Route exact path="/teacher/class/summary" component={TeacherClassSummary} />
-      <Route exact path="/teacher/class/attendance" component={TeacherClassAttendance} />
-      <Route exact path="/teacher/class/studentlist" component={TeacherClassStudentList} />
-      <Route exact path="/teacher/class/report/attendance" component={TeacherClassReportAttendance} />
-      <Route exact path="/teacher/class/report/student" component={TeacherClassReportStudent} />
-      <Route exact path="/teacher/class/setting" component={TeacherClassSetting} />
-      <Route exact path="/teacher/class/dashboard" component={TeacherClassDashboard} />
+      <Route exact path="/teacher/class/:id/:section/summary" component={TeacherClassSummary} />
+      <Route exact path="/teacher/class/:id/:section/attendance" component={TeacherClassAttendance} />
+      <Route exact path="/teacher/class/:id/:section/studentlist" component={TeacherClassStudentList} />
+      <Route exact path="/teacher/class/:id/:section/report/attendance" component={TeacherClassReportAttendance} />
+      <Route exact path="/teacher/class/:id/:section/report/student" component={TeacherClassReportStudent} />
+      <Route exact path="/teacher/class/:id/:section/setting" component={TeacherClassSetting} />
+      <Route exact path="/teacher/class/:id/:section/dashboard" component={TeacherClassDashboard} />
+      <Route exact path="/logout" component={Logout} />
+      <Route exact path="/unauthorized" component={Unauthorized} />
       <Route component={PageNotFound} />
     </Switch>
   </Router>

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getToken } from '../helpers'
+import { getToken } from '../helper'
 
 let axiosInstance = axios.create({
   baseURL: 'https://gatewayservice.sit.kmutt.ac.th/',
@@ -24,6 +24,10 @@ axiosInstance.interceptors.response.use(function (response) {
   return Promise.reject(error)
 })
 
+const configWithBearerToken = (config = {}) => ({...config,headers: {
+  Authorization: `Bearer ${getToken()}`
+} })
+
 class HttpRequest {
   constructor () {
     this.axios = axios
@@ -44,8 +48,9 @@ class HttpRequest {
     return axiosInstance.get(methodName, config)
   }
 
-  post (methodName, data) {
-    return axiosInstance.post(methodName, data)
+  post (methodName, data, useToken = false) {
+    const config = useToken ? configWithBearerToken(data) : { data }
+    return axiosInstance.post(methodName, data, config)
   }
 
   put (methodName, data) {

@@ -1,9 +1,11 @@
 import React from "react";
-import { Layout, Breadcrumb, Table } from 'antd';
+import { Layout, Breadcrumb, Table, message } from 'antd';
 import MenuBar from '../../components/teacher/Menu'
 import User from '../../components/User'
 import Footer from '../../components/Footer';
 import ClassProvider from '../../services/class_provider'
+import AuthenProvider from '../../services/authen_provider'
+import {getUser,setUser} from '../../helper'
 const { Header, Content, Sider } = Layout;
 
 
@@ -55,10 +57,29 @@ class ClassDetail extends React.Component {
 
   state = {
     collapsed: false,
-    data:[],
+    data: [],
   };
 
-  componentDidMount() {
+  async componentDidMount()  {
+    if (localStorage.getItem("token")){
+      const result = await AuthenProvider.fetchme()
+      console.log(result.data)
+      const user = result.data
+      setUser(user)
+      this.setState({ user: user })
+      console.log(result.data.name_th)
+      console.log(user.name_th)
+        
+        if(result.data.user_type === "inst_group") {
+            // this.getSubjectList(user.userid);
+        } else{
+            this.props.history.push("/Unauthorized")
+        }
+        
+    } else {
+      message.error('กรุณาเข้าสู่ระบบ')
+      this.props.history.push("/Login")
+    }
     this.getData()
   }
 
@@ -74,13 +95,16 @@ class ClassDetail extends React.Component {
   getData = async () => {
   try{
     const {data} = await ClassProvider.getreportbystudent({
-      course_code: this.props.match.params.id,
-      student_id: localStorage.getItem("user"),
+        course_code: this.props.match.params.id,
+        section_name: this.props.match.params.section,
+        semester: "1",
+        academicyear: "2563"
     })
 
     console.log('getData', data)
 
     this.setState({data})
+    console.table(this.state.data)
   }catch(e){
     console.log(e)
   }
@@ -96,7 +120,7 @@ class ClassDetail extends React.Component {
       </Sider>
     <Layout className="site-layout">
       <Header className="site-layout-background" style={{ padding: 0 }} >
-        <User/>
+        <User user={this.state.user} />
         </Header>
       <Content style={{ margin: '0 16px' }}>
         <h1 style={{fontSize: '28px', margin: '16px 0'}}>รายงานการเข้าเรียนตามรายชื่อนักศึกษา</h1>

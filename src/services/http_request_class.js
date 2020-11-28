@@ -51,6 +51,14 @@ class HttpRequest {
     return axiosInstance.delete(methodName, { params: {id: id} })
   }
 
+  postFile(methodName, formData) {
+    return axiosInstance.post(methodName, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  }
+
   request (type, url, data) {
     let promise = null
     switch (type) {

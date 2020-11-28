@@ -8,8 +8,8 @@ class ClassProvider extends HttpRequest{
         return this.post("api/oauth/token?client_secret=your secret code&client_id=your id&code=code that your auth&redirect_uri=your redirect uri",payload)
     }
 
-    fetchme(payload){
-        return this.post("api/me",payload)
+    fetchme(){
+        return this.get("api/me",null, true)
     }
 
 }

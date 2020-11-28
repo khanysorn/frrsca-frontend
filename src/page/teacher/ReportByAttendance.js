@@ -1,8 +1,9 @@
 import React from "react";
-import { Layout, Breadcrumb, Avatar, Table } from 'antd';
+import { Layout, Breadcrumb, Avatar, Table, message } from 'antd';
 import MenuBar from '../../components/teacher/Menu'
 import User from '../../components/User'
 import Footer from '../../components/Footer';
+import AuthenProvider from '../../services/authen_provider'
 const { Header, Content, Sider } = Layout;
 
 
@@ -56,6 +57,28 @@ class ClassDetail extends React.Component {
     collapsed: false,
   };
 
+  async componentDidMount()  {
+    if (localStorage.getItem("token")){
+        const result = await AuthenProvider.fetchme()
+        console.log(result.data)
+        // const { user_type } = result.data
+        const user = {name_th:result.data.name_th,userid:result.data.user_id}
+        this.setState({name:result.data.name_th,userid:result.data.user_id})
+        console.log(result.data.name_th)
+        console.log(user.name)
+        
+        if(result.data.user_type === "inst_group") {
+            this.getSubjectList(user.userid);
+        } else{
+            this.props.history.push("/Unauthorized")
+        }
+        
+    } else {
+      message.error('กรุณาเข้าสู่ระบบ')
+      this.props.history.push("/Login")
+    }
+  }
+
   onCollapse = collapsed => {
     console.log(collapsed);
     this.setState({ collapsed });
@@ -76,7 +99,7 @@ class ClassDetail extends React.Component {
     </Sider>
     <Layout className="site-layout">
       <Header className="site-layout-background" style={{ padding: 0 }} >
-        <User/>
+        <User user={this.state.user} />
         </Header>
       <Content style={{ margin: '0 16px' }}>
         <h1 style={{fontSize: '28px', margin: '16px 0'}}>รายงานการเข้าเรียนตามรายการเช็กชื่อ</h1>

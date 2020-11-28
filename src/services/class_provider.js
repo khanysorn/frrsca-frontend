@@ -1,25 +1,62 @@
 import HttpRequest from './http_request_class'
 
 class ClassProvider extends HttpRequest{
-    authentodb(payload){
-        return this.post("api/v1/class/attendance/authentodb",payload)
-    }
 
+
+    // Class Attendance History
     attendancehistorystudent(payload){
         const useMock = false;
         return useMock ? new ClassProviderMock().attendancehistorystudent(payload) : this.post("/api/v1/class/attendance/attendancehistorystudent",payload)
     }
-
+    
     gettimeofcourse(payload){
-        return this.post("api/v1/class/attendance/gettimeofcourse",payload)
+        return this.post("/api/v1/class/attendance/gettimeofcourse", payload)
     }
 
     getlistcourseforstudent(payload){
-        return this.post("api/v1/class/attendance/getlistcourseforstudent",payload)
+        return this.post("/api/v1/class/attendance/getlistcourseforstudent",payload)
     }
 
+    liststudentattendance(payload){
+        return this.post("/api/v1/class/attendance/liststudentattendanceclass", payload)
+    }
+
+    reportattendanceforlecturer(payload){
+        return this.post("/api/v1/class/attendance/reportattendanceforlecturer", payload)
+    }
+
+    reportbydatetime(payload){
+        return this.post("/api/v1/class/attendance/reportbydatetime", payload)
+    }
+
+    // Course Managemenr
+
+    Getlisttimecourseforlecturer(payload){
+        return this.post("/api/v1/class/attendance/getlistcourseforlecturer",payload)
+    }
+
+    classOverviewforLecturer(payload){
+        return this.post("/api/v1/class/attendance/overviewforlecturer", payload)
+    }
+
+    classSetting(payload){
+        return this.post("/api/v1/class/attendance/setting", payload)
+    }
+
+    // Timetable Management
+
+
+
+
+    authentodb(payload){
+        return this.post("api/v1/class/attendance/authentodb",payload)
+    }
+
+
+
+
     getreportbystudent(payload){
-        const useMock = true;
+        const useMock = false;
         return useMock ? new ClassProviderMock().getreportbystudent(payload) : this.post("/api/v1/class/attendance/attendancehistorystudent",payload)
     }
 
@@ -27,6 +64,28 @@ class ClassProvider extends HttpRequest{
     getlistallstudentenrollcourse(payload){
         return this.post("/api/v1/class/attendance/getlistallstudentenrollcourse",payload)
     }
+
+    addStudentImage(user_id, formData){
+        return this.postFile(`api/v1/class/attendance/student/image/${user_id}`, formData)
+    }
+
+    getlistcourseforlecturer(payload){
+        return this.post("/api/v1/class/attendance/getlistcourseforlecturer",payload)
+    }
+
+    gettimeclass(payload){
+        return this.post("/api/v1/class/attendance/gettimeclass",payload)
+    } 
+    
+    createchecklist(payload){
+        return this.post("/api/v1/class/attendance/createchecklist",payload)
+    }
+
+    deletechecklist(payload){
+        return this.post("/api/v1/class/attendance/deletechecklist",payload)
+    }
+
+
 }
 
 class ClassProviderMock {

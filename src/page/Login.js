@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, message} from "antd";
+import { Button, message } from "antd";
 import { useHistory, withRouter } from "react-router-dom";
 import ModalBox from '../components/ModalBox'
 import queryString from "query-string"
-// import ClassProvider from '../services/class_provider'
+import ClassProvider from '../services/class_provider'
 import AuthenProvider from '../services/authen_provider'
-import { getToken, setToken } from "../helpers";
+import { setToken } from "../helper";
 
 function Login(props) {
 
@@ -19,9 +19,37 @@ function Login(props) {
 
   
   useEffect(() => {
+    if (!localStorage.getItem("token")){
       handlelogin()
+    } else {
+      redirect()
+    }
+      
   // eslint-disable-next-line
   },[])
+
+  async function redirect() {
+    try {
+      const result = await AuthenProvider.fetchme()
+      const { user_type } = result.data
+      console.log(user_type)
+      switch (user_type) {
+        case "st_group":
+          history.push("/student/class");
+          setLoading3(false);
+          break
+        case "inst_group":
+          history.push("/teacher/class");
+          setLoading3(false);
+          break
+        default:
+          message.error('เกิดข้อผิดพลาด');
+      }
+    } catch (error) {
+      message.error('เกิดข้อผิดพลาด' & error)
+    }
+  }
+
 
   async function handlelogin(){
     const parsed = queryString.parse(props.location.search);
@@ -35,68 +63,33 @@ function Login(props) {
     // const user = await Login(await resFromSSO.json())
     const resFromSSOData = await resFromSSO.json()
     console.log(resFromSSOData)
-      // try{
-      //   const loginreponse = await ClassProvider.authentodb({
-      //     user_id: resFromSSOData.user_id,
-      //     name_th: resFromSSOData.name_th,
-      //     name_en: resFromSSOData.name_en,
-      //     email: resFromSSOData.email,
-      //     token: resFromSSOData.token,
-      //     create_user_date: `${resFromSSOData.created_at.substring(0,10)} ${resFromSSOData.created_at.substring(11,19)}.000000`,
-      //     role: resFromSSOData.user_type
-      //   })
-      //   console.log(loginreponse)
-      // }catch(e){
-      //   console.log(e)
-      // }
+
+    try{
+      const loginreponse = await ClassProvider.authentodb({
+        user_id: resFromSSOData.user_id,
+        name_th: resFromSSOData.name_th,
+        name_en: resFromSSOData.name_en,
+        email: resFromSSOData.email,
+        create_user_date: `${resFromSSOData.created_at.substring(0,10)} ${resFromSSOData.created_at.substring(11,19)}.000000`,
+        role: resFromSSOData.user_type
+      })
+      console.log(loginreponse)
+    }catch(e){
+      message.error(e)
+      console.log(e)
+    }
+
     // ส่งค่าไปให้ Backend
     // getuser ก่อน ว่ามี user อยู่บน db ไหม ถ้ามี ก็ไม่ต้่องสร้าง ถ้าไม่มีก็เพิ่ม
     // หลังจากที่เพิ่ม Backend เสร็จ Backend ต้อง generate token ขึ้นมา แล้วส่งกลับมาที่ frontend :) มาแทนที่ ID อันนี้
     setToken(resFromSSOData.token.token)
-
-    try {
-      const fetch = await AuthenProvider.fetchme({
-        token: getToken()
-      })
-      console.log(fetch)
-    } catch (error) {
-      message.error('เกิดข้อผิดพลาด' & error)
-    }
-
-    if(fetch.user_type==="st_group"){
-      history.push("/student/class");
-      setLoading3(false);
-    } else if (fetch.user_type==="inst_group"){
-      history.push("/teacher/class");
-      setLoading3(false);
-    } else {
-      message.error('เกิดข้อผิดพลาด');
-    }
+    console.log(resFromSSOData.token.token)
+    redirect()
   }
   setLoading3(false);
   }
 
-  // function mockloginstudent(){
-  //   setLoading1(true);
-  //   // return from backend {id : '123'}
-  //   // const res = {id : '123'}
-  //   // localStorage.setItem('userId', res.id)
-    
-  //   setTimeout(()=>{
-  //     setLoading1(false);
-  //     history.push("/student/class")
-  // },1000)
-  // };
-
-  // function mockloginteacher(){
-  //   setLoading2(true);
-  //   setTimeout(()=>{
-  //     setLoading2(false);
-  //     history.push("/teacher/class")
-  // },1000)
-  // };
-
-  
+ 
   
   return (
       <div className="background">

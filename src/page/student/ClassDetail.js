@@ -1,9 +1,11 @@
 import React from "react";
-import { Layout, Card, Col, Row, Skeleton, Statistic, Table, Tag } from "antd";
+import { Layout, Card, Col, Row, Skeleton, Statistic, Table, Tag, message } from "antd";
 import MenuBar from "../../components/student/Menu";
 import { withRouter } from "react-router-dom";
 import Footer from '../../components/Footer'
 import ClassProvider from '../../services/class_provider'
+import AuthenProvider from '../../services/authen_provider'
+import { getUser, setUser } from '../../helper'
 const { Header, Content } = Layout;
 
 const columns = [
@@ -12,6 +14,11 @@ const columns = [
     dataIndex: 'runningnumber',
     render: runningnumber => runningnumber+1 ,
     key: 'runningnumber',
+  },
+  {
+    title: 'ประเภทห้องเรียน',
+    dataIndex: 'classtype',
+    key: 'classtype',
   },
   {
     title: 'เวลาที่เข้าเรียน',
@@ -30,18 +37,44 @@ const columns = [
 
 class OwnerAddCourse extends React.Component {
 
-  state = {
-    subject: {
-    course_name: "",
-    section_name: "",
-    lecturer_name: "",
-    },
-    attendance: [],
-    isLoading: false
-  };
+  constructor(props) {
+    super(props)
+        this.state = {
+        subject: {
+        course_name: "",
+        section_name: "",
+        lecturer_name: "",
+        },
+        attendance: [],
+        isLoading: false
+      };
+  }
 
-  componentDidMount() {
-    this.getSubject();
+  async componentDidMount() {
+    this.setState({isLoading: true})
+    if (localStorage.getItem("token")){
+      try{
+        const result = await AuthenProvider.fetchme()
+        console.log(result.data)
+        // const { user_type } = result.data
+        const user = result.data
+        // save data into local storage
+        setUser(user)
+        this.setState({ user: user })
+        if(user.user_type !== "st_group") {
+          this.props.history.push("/Unauthorized")
+        } 
+      } catch(e) {
+        console.log(e)
+      } finally {
+        this.setState({isLoading: false})
+      }
+        
+    } else {
+      message.error('กรุณาเข้าสู่ระบบ')
+      this.props.history.push("/Login")
+    }
+    await this.getSubject();
   }
 
   getSubject = async () => {
@@ -49,14 +82,14 @@ class OwnerAddCourse extends React.Component {
     try{
       const result1 = await ClassProvider.attendancehistorystudent({
         course_code: this.props.match.params.id,
-        student_id: localStorage.getItem("user"),
+        student_id: getUser().user_id,
       })
       console.log(result1)
       this.setState({ subject: result1.data });
 
       const result2 = await ClassProvider.gettimeofcourse({
         course_code: this.props.match.params.id,
-        student_id: localStorage.getItem("user"),
+        student_id: getUser().user_id,
       })
       console.log(result2)
       for (let i=0; i<result2.data.length; i++){
@@ -78,7 +111,7 @@ class OwnerAddCourse extends React.Component {
     return (
       <Layout className="layout">
         <Header>
-          <MenuBar />
+            <MenuBar user={this.state.user}/>
         </Header>
         <Content style={{ padding: "0 50px", minHeight: "calc(100vh - 134px)" }}>
           <Row style={{ marginTop: "20px" }} gutter={[32, 32]}>
@@ -109,7 +142,7 @@ class OwnerAddCourse extends React.Component {
               <Card style={{height: "100%", display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center"}}>
               {this.state.isLoading  === false ? (
                   <Skeleton active paragraph={{ rows: 2 }}/>
-                ) : (<Statistic title="จำนวนครั้งที่มาเรียนตรงเวลา" value={this.state.subject.numOfOnTime} valueStyle={{ color: "#3f8600"}}/>)}
+                ) : (<Statistic title="จำนวนครั้งที่มาเรียนตรงเวลา" value={this.state.subject.num_of_on_time} valueStyle={{ color: "#3f8600"}}/>)}
               </Card>
             </Col>
             <Col span={6} xs={12} md={6}>
@@ -117,7 +150,7 @@ class OwnerAddCourse extends React.Component {
               {this.state.isLoading  === false ? (
                   <Skeleton active paragraph={{ rows: 2 }}/>
                 ) : (
-                <Statistic title="จำนวนครั้งที่มาเรียนสาย" value={this.state.subject.numOfLate1+this.state.subject.numOfLate2+this.state.subject.numOfLate3} valueStyle={{ color: "#d0021b" }} extra/>
+                <Statistic title="จำนวนครั้งที่มาเรียนสาย" value={this.state.subject.num_of_late_1+this.state.subject.num_of_late_2+this.state.subject.num_of_late_3} valueStyle={{ color: "#d0021b" }} extra/>
                 )}
               </Card>
             </Col>
@@ -126,7 +159,7 @@ class OwnerAddCourse extends React.Component {
               {this.state.isLoading  === false ? (
                   <Skeleton active paragraph={{ rows: 2 }}/>
                 ) : (
-                <Statistic title="จำนวนครั้งที่ขาดเรียน" value={this.state.subject.numOfAbsence} valueStyle={{ color: "#f8e71c" }}/>
+                <Statistic title="จำนวนครั้งที่ขาดเรียน" value={this.state.subject.num_of_absence} valueStyle={{ color: "#f8e71c" }}/>
                 )}
               </Card>
             </Col>
@@ -135,7 +168,7 @@ class OwnerAddCourse extends React.Component {
               {this.state.isLoading  === false ? (
                   <Skeleton active paragraph={{ rows: 2 }}/>
                 ) : (
-                <Statistic title="จำนวนครั้งที่ลาเรียน" value="0" valueStyle={{ color: "#595959" }}/>
+                <Statistic title="จำนวนครั้งที่ลาเรียน" value={this.state.subject.num_of_leave} valueStyle={{ color: "#595959" }}/>
                 )}
               </Card>
             </Col>
