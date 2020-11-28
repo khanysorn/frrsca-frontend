@@ -117,7 +117,7 @@ class Setting extends React.Component {
 
   render() {
     console.log(this.state.data.coursename_th)
-    const { collapsed, data } = this.state;
+    const { collapsed } = this.state;
     return (
     <Layout style={{ minHeight: '100vh' }}>
     <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse} theme="light">

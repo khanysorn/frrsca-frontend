@@ -9,7 +9,7 @@ import ClassProvider from "../../services/class_provider";
 import Footer from "../../components/Footer";
 import UploadBox from "../../components/student/UploadBox";
 import { setUser } from '../../helper'
-import { getUploadImageURL } from '../../helper';
+// import { getUploadImageURL } from '../../helper';
 
 const { Header, Content } = Layout;
 

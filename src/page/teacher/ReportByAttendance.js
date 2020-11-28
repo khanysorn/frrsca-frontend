@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Breadcrumb, Avatar, Table, message } from 'antd';
+import { Layout, Breadcrumb, Table, message } from 'antd';
 import MenuBar from '../../components/teacher/Menu'
 import User from '../../components/User'
 import Footer from '../../components/Footer';

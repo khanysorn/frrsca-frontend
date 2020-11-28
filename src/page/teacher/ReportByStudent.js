@@ -5,7 +5,7 @@ import User from '../../components/User'
 import Footer from '../../components/Footer';
 import ClassProvider from '../../services/class_provider'
 import AuthenProvider from '../../services/authen_provider'
-import {getUser,setUser} from '../../helper'
+import { setUser } from '../../helper'
 const { Header, Content, Sider } = Layout;
 
 
