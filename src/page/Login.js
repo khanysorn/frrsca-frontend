@@ -59,7 +59,7 @@ function Login(props) {
     const url = 'https://gatewayservice.sit.kmutt.ac.th/api/oauth/token'
     const secret = 'iPJIgH6dy4lTw1VBWYe3R2NjA'
     const clientId = "iNX5UkwC"
-    const resFromSSO = await fetch(`${url}?client_secret=${secret}&client_id=${clientId}&code=${parsed.code}&redirect_uri=https://frrsca-frontend-staging-boss.khanysorn.me/Login`)
+    const resFromSSO = await fetch(`${url}?client_secret=${secret}&client_id=${clientId}&code=${parsed.code}&redirect_uri=${window.location.origin}/Login`)
     // const user = await Login(await resFromSSO.json())
     const resFromSSOData = await resFromSSO.json()
     console.log(resFromSSOData)
@@ -89,7 +89,7 @@ function Login(props) {
   setLoading3(false);
   }
 
- 
+  const redirectLink = `https://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=iNX5UkwC&redirect_uri=${window.location.origin}/Login&state=frrsca`
   
   return (
       <div className="background">
@@ -101,7 +101,7 @@ function Login(props) {
         <br/ >มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</p>
         {/* <p><Button type="primary" htmlType="submit" size="middle" onClick={mockloginstudent} loading={isLoading1} >ลงชื่อเข้าใช้ในฐานะนักเรียน</Button></p>  
         <p><Button type="primary" htmlType="submit" onClick={mockloginteacher} loading={isLoading2}>ลงชื่อเข้าใช้ในฐานะอาจารย์ผู้สอน</Button></p>   */}
-        <p><a href="https://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=iNX5UkwC&redirect_uri=https://frrsca-frontend-staging-boss.khanysorn.me/Login&state=frrsca"><Button type="primary" loading={isLoading3}>ลงชื่อเข้าใช้ด้วย SIT SSO</Button></a></p>
+        <p><a href={redirectLink}><Button type="primary" loading={isLoading3}>ลงชื่อเข้าใช้ด้วย SIT SSO</Button></a></p>
       </div>
       <div>
         <p style={{marginTop:"auto"}}>หากยังไม่เปิดใช้งานบัญชี <a href="https://students.sit.kmutt.ac.th/SSSA/">คลิกที่นี่</a>
