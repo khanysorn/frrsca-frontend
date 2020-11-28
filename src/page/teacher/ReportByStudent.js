@@ -94,14 +94,14 @@ class ClassDetail extends React.Component {
 
   getData = async () => {
   try{
-    const {data} = await ClassProvider.getreportbystudent({
+    const {data} = await ClassProvider.reportattendanceforlecturer({
         course_code: this.props.match.params.id,
         section_name: this.props.match.params.section,
         semester: "1",
         academicyear: "2563"
     })
 
-    console.log('getData', data)
+    console.table('getData', data)
 
     this.setState({data})
     console.table(this.state.data)

@@ -94,10 +94,10 @@ class Setting extends React.Component {
         coursename_en: value.coursename_en
       })
       console.log(result)
-      message.success("Yayyy")
+      message.success("บันทึกข้อมูลสำเร็จ")
     }catch(e){
       console.log(e)
-      message.error("ไม่สามารถ Update ได้")
+      message.error("ไม่สามารถอัปเดตได้")
     } finally {
       this.setState({ isLoading: false})
     }

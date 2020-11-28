@@ -4,6 +4,7 @@ import MenuBar from '../../components/teacher/Menu'
 import User from '../../components/User'
 import Footer from '../../components/Footer';
 import AuthenProvider from '../../services/authen_provider'
+import ClassProvider from '../../services/class_provider'
 const { Header, Content, Sider } = Layout;
 
 
@@ -11,64 +12,73 @@ const columns = [
   {
     title: 'ครั้งที่',
     dataIndex: 'runningnumber',
-    render: () => (
-      <Avatar />
-    ),
+    render: runningnumber => runningnumber+1 ,
+    key: 'runningnumber',
   },
   {
-    title: 'วันที่',
-    dataIndex: 'timestamp',
-    key: 'timestamp',
+    title: 'เวลาที่เริ่มคาบเรียน',
+    dataIndex: 'timestart',
+    key: 'timestart',
+  },
+  {
+    title: 'เวลาที่หมดคาบเรียน',
+    dataIndex: 'timeend',
+    key: 'timeend',
   },
   {
     title: 'ตรงเวลา',
-    key: 'isontime',
-    dataIndex: 'isontime'
+    key: 'ontime',
+    dataIndex: 'ontime'
   },
   {
     title: 'สายครั้งที่ 1',
-    key: 'isontime',
-    dataIndex: 'isontime'
+    key: 'late1',
+    dataIndex: 'late1'
   },
   {
     title: 'สายครั้งที่ 2',
-    key: 'isontime',
-    dataIndex: 'isontime'
+    key: 'late2',
+    dataIndex: 'late2'
   },
   {
     title: 'สายครั้งที่ 3',
-    key: 'isontime',
-    dataIndex: 'isontime'
+    key: 'late3',
+    dataIndex: 'late3'
   },
   {
     title: 'ขาด',
-    key: 'isontime',
-    dataIndex: 'isontime'
+    key: 'isleave',
+    dataIndex: 'isleave'
   },
   {
     title: 'ลา',
-    key: 'isontime',
-    dataIndex: 'isontime'
+    key: 'isabsent',
+    dataIndex: 'isabsent'
   }
 ];
 class ClassDetail extends React.Component {
 
-  state = {
-    collapsed: false,
-  };
-
+  constructor(props) {
+    super(props)
+        this.state = {
+        user: {},
+        data:{},
+        attendance: [],
+        isLoading: false,
+        collapsed: false,
+      };
+  }
   async componentDidMount()  {
     if (localStorage.getItem("token")){
         const result = await AuthenProvider.fetchme()
         console.log(result.data)
         // const { user_type } = result.data
-        const user = {name_th:result.data.name_th,userid:result.data.user_id}
-        this.setState({name:result.data.name_th,userid:result.data.user_id})
+        this.setState({ data: result.data })
         console.log(result.data.name_th)
-        console.log(user.name)
+        console.table(this.state.data);
         
         if(result.data.user_type === "inst_group") {
-            this.getSubjectList(user.userid);
+
         } else{
             this.props.history.push("/Unauthorized")
         }
@@ -77,8 +87,29 @@ class ClassDetail extends React.Component {
       message.error('กรุณาเข้าสู่ระบบ')
       this.props.history.push("/Login")
     }
+
+    this.getData()
   }
 
+  async getData(){
+    try{
+      const {data} = await ClassProvider.reportbydatetime({
+          course_code: this.props.match.params.id,
+          section_name: this.props.match.params.section,
+          semester: "1",
+          academicyear: "2563"
+      })
+  
+      console.log('getData', data)
+
+      this.setState({attendance: data})
+      console.table(this.state.attendance)
+
+    }catch(e){
+      console.log(e)
+    }
+
+  }
   onCollapse = collapsed => {
     console.log(collapsed);
     this.setState({ collapsed });
