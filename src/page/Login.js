@@ -101,7 +101,7 @@ function Login(props) {
         <br/ >มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</p>
         {/* <p><Button type="primary" htmlType="submit" size="middle" onClick={mockloginstudent} loading={isLoading1} >ลงชื่อเข้าใช้ในฐานะนักเรียน</Button></p>  
         <p><Button type="primary" htmlType="submit" onClick={mockloginteacher} loading={isLoading2}>ลงชื่อเข้าใช้ในฐานะอาจารย์ผู้สอน</Button></p>   */}
-        <p><a href="https://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=iNX5UkwC&redirect_uri=http://localhost:3000/Login&state=frrsca"><Button type="primary" loading={isLoading3}>ลงชื่อเข้าใช้ด้วย SIT SSO</Button></a></p>
+        <p><a href="https://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=iNX5UkwC&redirect_uri=https://frrsca-frontend-staging-boss.khanysorn.me/Login&state=frrsca"><Button type="primary" loading={isLoading3}>ลงชื่อเข้าใช้ด้วย SIT SSO</Button></a></p>
       </div>
       <div>
         <p style={{marginTop:"auto"}}>หากยังไม่เปิดใช้งานบัญชี <a href="https://students.sit.kmutt.ac.th/SSSA/">คลิกที่นี่</a>
