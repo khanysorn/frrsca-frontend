@@ -116,7 +116,7 @@ class ClassDetail extends React.Component {
       title: 'ดำเนินการ',
       render: (text, record) => (
         <Space size="middle">
-          <a onClick={() => this.deleteAttendance('timestart', record)}>ลบ</a>
+          <p style={{cursor: "pointer"}} onClick={() => this.deleteAttendance('timestart', record)}>ลบ</p>
         </Space>
       ),
     },
