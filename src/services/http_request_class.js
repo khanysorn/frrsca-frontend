@@ -56,7 +56,7 @@ class HttpRequest {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-    })
+    }).catch(e => e.response)
   }
 
   request (type, url, data) {

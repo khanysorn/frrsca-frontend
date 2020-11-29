@@ -12,8 +12,8 @@ const { Header, Content, Sider } = Layout;
 const columns = [
   {
     title: 'รหัสนักศึกษา',
-    dataIndex: 'student_id',
-    key: 'student_id',
+    dataIndex: 'users_username',
+    key: 'users_username',
   },
   {
     title: 'ชื่อ - นามสกุล',
@@ -22,33 +22,33 @@ const columns = [
   },
   {
     title: 'ตรงเวลา',
-    key: 'numOfOnTime',
-    dataIndex: 'numOfOnTime'
+    key: 'ontime',
+    dataIndex: 'ontime'
   },
   {
     title: 'สายครั้งที่ 1',
-    key: 'numOfLate1',
-    dataIndex: 'numOfLate1'
+    key: 'late1',
+    dataIndex: 'late1'
   },
   {
     title: 'สายครั้งที่ 2',
-    key: 'numOfLate2',
-    dataIndex: 'numOfLate2'
+    key: 'late2',
+    dataIndex: 'late2'
   },
   {
     title: 'สายครั้งที่ 3',
-    key: 'numOfLate3',
-    dataIndex: 'numOfLate3'
+    key: 'late3',
+    dataIndex: 'late3'
   },
   {
     title: 'ขาด',
-    key: 'numOfAbsence',
-    dataIndex: 'numOfAbsence'
+    key: 'isleave',
+    dataIndex: 'isleave'
   },
   {
     title: 'ลา',
-    key: 'numOfLeave',
-    dataIndex: 'numOfLeave'
+    key: 'isabsent',
+    dataIndex: 'isabsent'
   }
 ];
 
@@ -126,7 +126,7 @@ class ClassDetail extends React.Component {
         <h1 style={{fontSize: '28px', margin: '16px 0'}}>รายงานการเข้าเรียนตามรายชื่อนักศึกษา</h1>
         <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>วิชาของคุณ</Breadcrumb.Item>
-          <Breadcrumb.Item>INT305</Breadcrumb.Item>
+          <Breadcrumb.Item>{this.props.match.params.id}</Breadcrumb.Item>
           <Breadcrumb.Item>รายงาน</Breadcrumb.Item>
           <Breadcrumb.Item>การเข้าเรียนตามรายชื่อนักศึกษา</Breadcrumb.Item>
         </Breadcrumb>

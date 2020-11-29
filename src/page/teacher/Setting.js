@@ -47,13 +47,13 @@ class Setting extends React.Component {
       this.setState({ user: user })
       console.log(result.data.name_th)
       console.log(user.name_th)
-        
+
         if(result.data.user_type === "inst_group") {
 
         } else{
             this.props.history.push("/Unauthorized")
         }
-        
+
     } else {
       message.error('กรุณาเข้าสู่ระบบ')
       this.props.history.push("/Login")
@@ -73,7 +73,7 @@ class Setting extends React.Component {
       this.formRef.current.setFieldsValue({
         coursename_th: this.state.data.coursename_th,
         coursename_en: this.state.data.coursename_en,
-        
+
       })
       console.table(this.state.data);
     }catch(e){
@@ -132,7 +132,7 @@ class Setting extends React.Component {
         <h1 style={{fontSize: '28px', margin: '16px 0'}}>การตั้งค่า</h1>
         <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>วิชาของคุณ</Breadcrumb.Item>
-          <Breadcrumb.Item>INT305</Breadcrumb.Item>
+          <Breadcrumb.Item>{this.props.match.params.id}</Breadcrumb.Item>
           <Breadcrumb.Item>การตั้งค่า</Breadcrumb.Item>
         </Breadcrumb>
         <div className="site-layout-background" style={{ padding: 24 }}>
@@ -143,7 +143,7 @@ class Setting extends React.Component {
           <Form.Item name="coursename_en" label="Subject Title (English)" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
-          
+
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit">
               บันทึกข้อมูล

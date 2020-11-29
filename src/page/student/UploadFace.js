@@ -8,8 +8,8 @@ import AuthenProvider from "../../services/authen_provider";
 import ClassProvider from "../../services/class_provider";
 import Footer from "../../components/Footer";
 import UploadBox from "../../components/student/UploadBox";
-import { setUser } from '../../helper'
-// import { getUploadImageURL } from '../../helper';
+import { getUser, setUser } from '../../helper'
+import { getUploadImageURL } from '../../helper';
 
 const { Header, Content } = Layout;
 
@@ -19,17 +19,19 @@ const props = {
   name: "image",
   accept: ".jpg,.jpeg,.png",
   multiple: false,
-  // action: getUploadImageURL(),
-  onChange(info) {
-    console.log(info)
-    const { status } = info.file;
-    if (status !== "กำลังอัปโหลด") {
-      console.log(info.file, info.fileList);
+  action: getUploadImageURL(),
+  customRequest: async ({ onSuccess, onError, file }) => {
+    let formData = new FormData()
+    formData.append('image', file)
+    const response = await ClassProvider.addStudentImage(getUser().user_id, formData)
+    console.log(response.status)
+    if (response.data.message === 'success') {
+      onSuccess(null, file)
+      message.success(`ไฟล์ ${file.name} อัปโหลดรูปเสร็จสมบูรณ์`);
     }
-    if (status === "done") {
-      message.success(`ไฟล์ ${info.file.name} อัปโหลดรูปเสร็จสมบูรณ์`);
-    } else if (status === "error") {
-      message.error(`ไฟล์ ${info.file.name} อัปโหลดรูปไม่เสร็จสมบูรณ์`);
+    if (response.status !== 200) {
+      onError('Error', response.data)
+      message.error(`ไฟล์ ${file.name} อัปโหลดรูปไม่เสร็จสมบูรณ์`);
     }
   },
 };
@@ -38,22 +40,10 @@ class UploadFace extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      data: [],
       name: "",
       userid: "",
       image: null
     }
-    this.onFileChange = this.onFileChange.bind(this)
-  }
-
-
-  async onFileChange(info){
-    console.log(info)
-    console.log(info.file) // should contain originFileObj
-    let formData = new FormData()
-    formData.append('image', info.file.originFileObj)
-    await ClassProvider.addStudentImage("60130500008", formData)
-    info.file.status = 'done'
   }
 
   async componentDidMount() {
@@ -69,13 +59,13 @@ class UploadFace extends React.Component {
         this.setState({ user: user })
         if(user.user_type !== "st_group") {
           this.props.history.push("/Unauthorized")
-        } 
+        }
       } catch(e) {
         console.log(e)
       } finally {
         this.setState({isLoading: false})
       }
-        
+
     } else {
       message.error('กรุณาเข้าสู่ระบบ')
       this.props.history.push("/Login")
@@ -128,7 +118,7 @@ class UploadFace extends React.Component {
               </Col>
               <Col xs={24} md={6} style={UploadBox}>
                 <h1 style={{ marginBottom: "20px" }}> อัปโหลดรูปภาพ</h1>
-                <Dragger {...{...props, onChange: this.onFileChange}} >
+                <Dragger {...props} >
                   <p className="ant-upload-drag-icon">
                     <InboxOutlined />
                   </p>

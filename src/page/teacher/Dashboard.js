@@ -61,7 +61,7 @@ class ClassDetail extends React.Component {
       <Content style={{ margin: '0 16px' }}>
         <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>วิชาของคุณ</Breadcrumb.Item>
-          <Breadcrumb.Item>INT305</Breadcrumb.Item>
+          <Breadcrumb.Item>{this.props.match.params.id}</Breadcrumb.Item>
           <Breadcrumb.Item>ภาพรวมของคุณ</Breadcrumb.Item>
         </Breadcrumb>
         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>

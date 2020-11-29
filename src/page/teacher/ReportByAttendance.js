@@ -11,9 +11,8 @@ const { Header, Content, Sider } = Layout;
 const columns = [
   {
     title: 'ครั้งที่',
-    dataIndex: 'runningnumber',
-    render: runningnumber => runningnumber+1 ,
-    key: 'runningnumber',
+    dataIndex: 'no',
+    key: 'no',
   },
   {
     title: 'เวลาที่เริ่มคาบเรียน',
@@ -101,8 +100,8 @@ class ClassDetail extends React.Component {
       })
   
       console.log('getData', data)
-
-      this.setState({attendance: data})
+      const attendance = Array.isArray(data) ? data.map((record, no) => ({no: no + 1, ...record})) : []
+      this.setState({attendance})
       console.table(this.state.attendance)
 
     }catch(e){
@@ -136,7 +135,7 @@ class ClassDetail extends React.Component {
         <h1 style={{fontSize: '28px', margin: '16px 0'}}>รายงานการเข้าเรียนตามรายการเช็กชื่อ</h1>
         <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>วิชาของคุณ</Breadcrumb.Item>
-          <Breadcrumb.Item>INT305</Breadcrumb.Item>
+          <Breadcrumb.Item>{this.props.match.params.id}</Breadcrumb.Item>
           <Breadcrumb.Item>รายงาน</Breadcrumb.Item>
           <Breadcrumb.Item>การเข้าเรียนตามรายชื่อนักศึกษา</Breadcrumb.Item>
         </Breadcrumb>

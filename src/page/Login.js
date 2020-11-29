@@ -17,14 +17,14 @@ function Login(props) {
 
   const [isLoading3,setLoading3] = useState(false);
 
-  
+
   useEffect(() => {
     if (!localStorage.getItem("token")){
       handlelogin()
     } else {
       redirect()
     }
-      
+
   // eslint-disable-next-line
   },[])
 
@@ -90,7 +90,7 @@ function Login(props) {
   }
 
   const redirectLink = `https://std-sso-fe.sit.kmutt.ac.th/login?response_type=code&client_id=iNX5UkwC&redirect_uri=${window.location.origin}/Login&state=frrsca`
-  
+
   return (
       <div className="background">
       <div style={ModalBox}>
@@ -99,13 +99,13 @@ function Login(props) {
       <h1>เข้าสู่ระบบ</h1>
         <p>ลงชื่อเข้าใช้ด้วยบัญชีผู้ใช้ของคณะเทคโนโลยีสารสนเทศ
         <br/ >มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</p>
-        {/* <p><Button type="primary" htmlType="submit" size="middle" onClick={mockloginstudent} loading={isLoading1} >ลงชื่อเข้าใช้ในฐานะนักเรียน</Button></p>  
+        {/* <p><Button type="primary" htmlType="submit" size="middle" onClick={mockloginstudent} loading={isLoading1} >ลงชื่อเข้าใช้ในฐานะนักเรียน</Button></p>
         <p><Button type="primary" htmlType="submit" onClick={mockloginteacher} loading={isLoading2}>ลงชื่อเข้าใช้ในฐานะอาจารย์ผู้สอน</Button></p>   */}
         <p><a href={redirectLink}><Button type="primary" loading={isLoading3}>ลงชื่อเข้าใช้ด้วย SIT SSO</Button></a></p>
       </div>
       <div>
         <p style={{marginTop:"auto"}}>หากยังไม่เปิดใช้งานบัญชี <a href="https://students.sit.kmutt.ac.th/SSSA/">คลิกที่นี่</a>
-        <br/ >หากลืมรหัสผ่าน <a href="https://myaccount.kmutt.ac.th/accountactivation-app/recovery-account">คลิกที่นี่</a></p> 
+        <br/ >หากลืมรหัสผ่าน <a href="https://myaccount.kmutt.ac.th/accountactivation-app/recovery-account">คลิกที่นี่</a></p>
       </div>
       </div>
       </div>

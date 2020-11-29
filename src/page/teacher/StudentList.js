@@ -119,7 +119,7 @@ class ClassDetail extends React.Component {
         <h1 style={{fontSize: '28px', margin: '16px 0'}}>รายชื่อนักศึกษา</h1>
         <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>วิชาของคุณ</Breadcrumb.Item>
-          <Breadcrumb.Item>INT305</Breadcrumb.Item>
+          <Breadcrumb.Item>{this.props.match.params.id}</Breadcrumb.Item>
           <Breadcrumb.Item>รายชื่อนักศึกษา</Breadcrumb.Item>
         </Breadcrumb>
         <Table columns={columns} dataSource={this.state.data} style={{width: "100%"}} bordered />
