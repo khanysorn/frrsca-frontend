@@ -15,26 +15,7 @@ const { Header, Content } = Layout;
 
 const { Dragger } = Upload;
 
-const props = {
-  name: "image",
-  accept: ".jpg,.jpeg,.png",
-  multiple: false,
-  action: getUploadImageURL(),
-  customRequest: async ({ onSuccess, onError, file }) => {
-    let formData = new FormData()
-    formData.append('image', file)
-    const response = await ClassProvider.addStudentImage(getUser().user_id, formData)
-    console.log(response.status)
-    if (response.data.message === 'success') {
-      onSuccess(null, file)
-      message.success(`ไฟล์ ${file.name} อัปโหลดรูปเสร็จสมบูรณ์`);
-    }
-    if (response.status !== 200) {
-      onError('Error', response.data)
-      message.error(`ไฟล์ ${file.name} อัปโหลดรูปไม่เสร็จสมบูรณ์`);
-    }
-  },
-};
+
 
 class UploadFace extends React.Component {
   constructor(props) {
@@ -72,8 +53,31 @@ class UploadFace extends React.Component {
     }
   }
 
+  props = {
+    name: "image",
+    accept: ".jpg,.jpeg,.png",
+    multiple: false,
+    action: getUploadImageURL(),
+    customRequest: async ({ onSuccess, onError, file }) => {
+      let formData = new FormData()
+      formData.append('image', file)
+      const response = await ClassProvider.addStudentImage(getUser().user_id, formData)
+      console.log(response.status)
+      if (response.data.message === 'success') {
+        onSuccess(null, file)
+        message.success(`ไฟล์ ${file.name} อัปโหลดรูปเสร็จสมบูรณ์`);
+      }
+      if (response.status !== 200) {
+        onError('Error', response.data)
+        message.error(`ไฟล์ ${file.name} อัปโหลดรูปไม่เสร็จสมบูรณ์`);
+      }
+    },
+  };
+
   render() {
     console.log(this.state.data);
+
+
     return (
       <>
         <Layout className="layout">
@@ -118,7 +122,7 @@ class UploadFace extends React.Component {
               </Col>
               <Col xs={24} md={6} style={UploadBox}>
                 <h1 style={{ marginBottom: "20px" }}> อัปโหลดรูปภาพ</h1>
-                <Dragger {...props} >
+                <Dragger {...this.props} >
                   <p className="ant-upload-drag-icon">
                     <InboxOutlined />
                   </p>
