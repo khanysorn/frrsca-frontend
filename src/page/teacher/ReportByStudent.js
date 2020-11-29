@@ -1,13 +1,14 @@
 import React from "react";
+// import { CSVLink } from "react-csv";
 import { Layout, Breadcrumb, Table, message } from 'antd';
 import MenuBar from '../../components/teacher/Menu'
 import User from '../../components/User'
 import Footer from '../../components/Footer';
 import ClassProvider from '../../services/class_provider'
 import AuthenProvider from '../../services/authen_provider'
+import { ExportCSV } from './ExportCSV'
 import { setUser } from '../../helper'
 const { Header, Content, Sider } = Layout;
-
 
 const columns = [
   {
@@ -58,7 +59,9 @@ class ClassDetail extends React.Component {
   state = {
     collapsed: false,
     data: [],
+    fileName:'ReportStudent'
   };
+  
 
   async componentDidMount()  {
     if (localStorage.getItem("token")){
@@ -102,14 +105,14 @@ class ClassDetail extends React.Component {
     })
 
     console.table('getData', data)
-
-    this.setState({data})
-    console.table(this.state.data)
+    const attendance = Array.isArray(data) ? data.map((record, no) => ({no: no + 1, ...record})) : []
+    this.setState({attendance})
+    console.table(this.state.attendance)
   }catch(e){
     console.log(e)
   }
   } 
-
+  
   render() {
     const { collapsed } = this.state;
     return (
@@ -124,14 +127,20 @@ class ClassDetail extends React.Component {
         </Header>
       <Content style={{ margin: '0 16px' }}>
         <h1 style={{fontSize: '28px', margin: '16px 0'}}>รายงานการเข้าเรียนตามรายชื่อนักศึกษา</h1>
+        <div className="col-md-4 center">
+            <ExportCSV csvData={this.state.attendance} fileName={this.state.fileName} />
+        </div>
         <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>วิชาของคุณ</Breadcrumb.Item>
           <Breadcrumb.Item>{this.props.match.params.id}</Breadcrumb.Item>
           <Breadcrumb.Item>รายงาน</Breadcrumb.Item>
           <Breadcrumb.Item>การเข้าเรียนตามรายชื่อนักศึกษา</Breadcrumb.Item>
         </Breadcrumb>
+        {/* <div> */}
         
-        <Table columns={columns} dataSource={this.state.data} style={{width: "100%", marginTop: "30px"}} bordered />
+       
+
+        <Table columns={columns} dataSource={this.state.attendance} style={{width: "100%", marginTop: "30px"}} bordered />
         <div className="site-layout-background">
           
         </div>

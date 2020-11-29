@@ -5,6 +5,7 @@ import User from '../../components/User'
 import Footer from '../../components/Footer';
 import AuthenProvider from '../../services/authen_provider'
 import ClassProvider from '../../services/class_provider'
+import { ExportCSV } from './ExportCSV'
 const { Header, Content, Sider } = Layout;
 
 
@@ -65,6 +66,7 @@ class ClassDetail extends React.Component {
         attendance: [],
         isLoading: false,
         collapsed: false,
+        fileName:'ReportBydatetime'
       };
   }
   async componentDidMount()  {
@@ -133,6 +135,10 @@ class ClassDetail extends React.Component {
         </Header>
       <Content style={{ margin: '0 16px' }}>
         <h1 style={{fontSize: '28px', margin: '16px 0'}}>รายงานการเข้าเรียนตามรายการเช็กชื่อ</h1>
+        <div className="col-md-4 center">
+            <ExportCSV csvData={this.state.attendance} fileName={this.state.fileName} />
+        </div>
+       
         <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>วิชาของคุณ</Breadcrumb.Item>
           <Breadcrumb.Item>{this.props.match.params.id}</Breadcrumb.Item>
