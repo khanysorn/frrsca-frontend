@@ -3,17 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { runWithAdal } from 'react-adal';
-import { authContext } from './adalConfig';
 
-const DO_NOT_LOGIN = false;
 
-runWithAdal(authContext, () => {
-
-  // eslint-disable-next-line
-  // require('Login.js');
-
-},DO_NOT_LOGIN);
 
 ReactDOM.render(
   <React.StrictMode>

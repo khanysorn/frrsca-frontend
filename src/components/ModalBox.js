@@ -1,4 +1,4 @@
-const LoginBox = {
+const ModalBox = {
   backgroundColor: "white",
   width: "500px",
   height: "500px",
@@ -7,4 +7,4 @@ const LoginBox = {
 
 }
 
-export default LoginBox;
+export default ModalBox;
